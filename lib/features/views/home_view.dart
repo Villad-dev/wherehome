@@ -1,0 +1,230 @@
+import 'dart:core';
+
+import 'package:flutter/material.dart';
+import 'package:wherehome/features/views/favourite_view.dart';
+import 'package:wherehome/features/views/homeItem_view.dart';
+import 'package:wherehome/features/views/map_view.dart';
+import 'package:wherehome/features/views/profile_view.dart';
+
+import '../dataset/Home.dart';
+
+class HomeView extends StatelessWidget {
+  const HomeView({super.key, required String title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Hola'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              // TODO: Implement search functionality
+            },
+            icon: const Icon(Icons.search),
+          ),
+        ],
+      ),
+      body: const Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SearchWidget(),
+          SizedBox(height: 8),
+          Expanded(
+            child: HomesGrid(),
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Add your action when the button is pressed
+        },
+        elevation: 12, // Add elevation for a shadow effect
+        tooltip: 'Add',
+        child: const Icon(
+            Icons.add), // Tooltip text when the button is long-pressed
+      ),
+      bottomNavigationBar: BottomAppBar(
+        elevation: 8,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            IconButton(
+              onPressed: () {
+                // TODO: Implement catalog functionality
+              },
+              icon: const Icon(Icons.menu),
+            ),
+            IconButton(
+              onPressed: () {
+                // TODO: Implement favorite functionality
+                Navigator.push(context,
+                    MaterialPageRoute(
+                        builder: (context) => const FavoriteView()));
+              },
+              icon: const Icon(Icons.favorite),
+            ),
+            IconButton(
+              onPressed: () {
+                // TODO: Implement map functionality
+                Navigator.push(context,
+                    MaterialPageRoute(
+                        builder: (context) => const MapView()));
+              },
+              icon: const Icon(Icons.map),
+            ),
+            IconButton(
+              onPressed: () {
+                // TODO: Implement profile functionality
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ProfileView()));
+              },
+              icon: const Icon(Icons.person),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class HomesGrid extends StatelessWidget {
+  const HomesGrid({super.key});
+
+  static List<Home> homes = [
+    Home(
+        'ul. Piotrokowska',
+        '2',
+        'Warsaw',
+        4000.0,
+        45.0,
+        2,
+        "assets/images/img2.jpg"),
+    Home(
+        'ul. Bohaterska',
+        '5',
+        'Warsaw',
+        2450,
+        45,
+        2,
+        "assets/images/img2.jpg"),
+    Home(
+        'ul. Kaminskiego',
+        '40',
+        'Poznan',
+        4650,
+        45,
+        2,
+        "assets/images/img1.jpg"),
+    // Add more homes as needed
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.count(
+      padding: const EdgeInsets.all(10.0),
+      crossAxisCount: 2,
+      crossAxisSpacing: 10.0,
+      mainAxisSpacing: 10.0,
+      children: homes.map((home) {
+        return HomeWidget(
+          homeDataSet: home,
+        );
+      }).toList(),
+    );
+  }
+}
+
+class SearchWidget extends StatefulWidget {
+  const SearchWidget({super.key});
+
+  @override
+  State<SearchWidget> createState() => _SearchWidgetState();
+}
+
+class _SearchWidgetState extends State<SearchWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(10.0),
+      child: const SearchBar(
+          constraints: BoxConstraints(
+            maxWidth: 400,
+            minWidth: 100,
+            minHeight: 50,
+            maxHeight: 100,
+          )),
+    );
+  }
+}
+
+class HomeWidget extends StatelessWidget {
+  final Home homeDataSet;
+
+  const HomeWidget({
+    super.key,
+    required this.homeDataSet,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(
+            builder: (context) => HomeItemView()));
+      }, // Execute the callback function when tapped
+
+      child: Container(
+        alignment: Alignment.topCenter,
+        decoration: BoxDecoration(
+          shape: BoxShape.rectangle,
+          borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+          border: Border.all(
+            width: 1.0,
+            color: Colors.white30, //Theme.of(context).canvasColor,
+            style: BorderStyle.solid,
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5), // Shadow color
+              spreadRadius: 2, // Spread radius
+              blurRadius: 5, // Blur radius
+              offset: const Offset(0, 3), // Shadow position
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // Center the content vertically
+          crossAxisAlignment: CrossAxisAlignment.center,
+          // Center the content horizontally
+          children: [
+            Align(
+              alignment: Alignment.topCenter,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(10.0),
+                  topRight: Radius.circular(10.0),
+                ),
+                child: Image.asset(
+                  homeDataSet.imagePath,
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              "${homeDataSet.address} ${homeDataSet.address_num}",
+              textAlign: TextAlign.center, // Align text to center
+            ),
+            Text(
+              "${homeDataSet.price}  zl",
+              textAlign: TextAlign.center, // Align text to center
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
