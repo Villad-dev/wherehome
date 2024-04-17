@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../dataset/Home.dart';
+import '../dataset/home.dart';
 
 class FavoriteView extends StatelessWidget {
   const FavoriteView({super.key});

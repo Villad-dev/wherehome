@@ -1,0 +1,51 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+class ApiService {
+  static const String baseUrl = "https://example.com/api";
+
+  // Example GET request
+  Future<void> fetchData() async {
+    final response = await http.get(Uri.parse('$baseUrl/data'));
+
+    if (response.statusCode == 200) {
+      // Successful GET request
+      final data = jsonDecode(response.body);
+      print('GET request successful: $data');
+    } else {
+      // Handle errors
+      print('GET request failed with status: ${response.statusCode}');
+    }
+  }
+
+  // Example POST request
+  Future<void> postData(Map<String, dynamic> postData) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/data'),
+      body: jsonEncode(postData),
+      headers: {'Content-Type': 'application/json'},
+    );
+
+    if (response.statusCode == 201) {
+      // Successful POST request
+      final data = jsonDecode(response.body);
+      print('POST request successful: $data');
+    } else {
+      // Handle errors
+      print('POST request failed with status: ${response.statusCode}');
+    }
+  }
+
+  // Example DELETE request
+  Future<void> deleteData(int id) async {
+    final response = await http.delete(Uri.parse('$baseUrl/data/$id'));
+
+    if (response.statusCode == 200) {
+      // Successful DELETE request
+      print('DELETE request successful');
+    } else {
+      // Handle errors
+      print('DELETE request failed with status: ${response.statusCode}');
+    }
+  }
+}

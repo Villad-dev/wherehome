@@ -55,7 +55,8 @@ class _LoginViewState extends State<LoginView> {
           ),
           const Spacer(),
           OutlinedButton(
-            onPressed: () {// TODO
+            onPressed: () {
+              // TODO
               Navigator.push(context,
               MaterialPageRoute(builder: (context) => const HomeView(title: 'HomeView'))); },
             style: ButtonStyle(

@@ -6,7 +6,8 @@ import 'package:wherehome/features/views/homeItem_view.dart';
 import 'package:wherehome/features/views/map_view.dart';
 import 'package:wherehome/features/views/profile_view.dart';
 
-import '../dataset/Home.dart';
+import '../dataset/filter.dart';
+import '../dataset/home.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key, required String title});
@@ -30,6 +31,7 @@ class HomeView extends StatelessWidget {
         children: [
           SearchWidget(),
           SizedBox(height: 8),
+          FiltersWidget(),
           Expanded(
             child: HomesGrid(),
           ),
@@ -58,7 +60,8 @@ class HomeView extends StatelessWidget {
             IconButton(
               onPressed: () {
                 // TODO: Implement favorite functionality
-                Navigator.push(context,
+                Navigator.push(
+                    context,
                     MaterialPageRoute(
                         builder: (context) => const FavoriteView()));
               },
@@ -68,8 +71,7 @@ class HomeView extends StatelessWidget {
               onPressed: () {
                 // TODO: Implement map functionality
                 Navigator.push(context,
-                    MaterialPageRoute(
-                        builder: (context) => const MapView()));
+                    MaterialPageRoute(builder: (context) => const MapView()));
               },
               icon: const Icon(Icons.map),
             ),
@@ -94,29 +96,11 @@ class HomesGrid extends StatelessWidget {
   const HomesGrid({super.key});
 
   static List<Home> homes = [
-    Home(
-        'ul. Piotrokowska',
-        '2',
-        'Warsaw',
-        4000.0,
-        45.0,
-        2,
+    Home('ul. Piotrokowska', '2', 'Warsaw', 4000.0, 45.0, 2,
         "assets/images/img2.jpg"),
     Home(
-        'ul. Bohaterska',
-        '5',
-        'Warsaw',
-        2450,
-        45,
-        2,
-        "assets/images/img2.jpg"),
-    Home(
-        'ul. Kaminskiego',
-        '40',
-        'Poznan',
-        4650,
-        45,
-        2,
+        'ul. Bohaterska', '5', 'Warsaw', 2450, 45, 2, "assets/images/img2.jpg"),
+    Home('ul. Kaminskiego', '40', 'Poznan', 4650, 45, 2,
         "assets/images/img1.jpg"),
     // Add more homes as needed
   ];
@@ -149,13 +133,81 @@ class _SearchWidgetState extends State<SearchWidget> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(10.0),
-      child: const SearchBar(
-          constraints: BoxConstraints(
-            maxWidth: 400,
-            minWidth: 100,
-            minHeight: 50,
-            maxHeight: 100,
-          )),
+      child: SearchAnchor(
+        builder: (BuildContext context, SearchController controller) {
+          return SearchBar(
+            controller: controller,
+            onTap: () {
+              controller.openView();
+            },
+            leading: const Icon(Icons.search),
+            hintText: 'Find home',
+            constraints: const BoxConstraints(
+              maxWidth: 400,
+              minWidth: 100,
+              minHeight: 50,
+              maxHeight: 100,
+            ),
+          );
+        },
+        suggestionsBuilder:
+            (BuildContext context, SearchController controller) {
+          return List<ListTile>.generate(5, (int index) {
+            final String item = 'item $index';
+            return ListTile(
+              title: Text(item),
+              onTap: () {
+                setState(() {
+                  controller.closeView(item);
+                });
+              },
+            );
+          });
+        },
+      ),
+    );
+  }
+}
+
+class FiltersWidget extends StatefulWidget {
+  const FiltersWidget({super.key});
+
+  @override
+  State<FiltersWidget> createState() => _FiltersWidgetState();
+}
+
+class _FiltersWidgetState extends State<FiltersWidget> {
+  List<DropdownMenuEntry<Filter>> filters = [
+    DropdownMenuEntry(value: Filter('sorting'), label: 'sorting'),
+    DropdownMenuEntry(value: Filter('promotion ASC'), label: 'promotion ASC'),
+    DropdownMenuEntry(value: Filter('promotion DESC'), label: 'promotion DESC'),
+    DropdownMenuEntry(
+        value: Filter('date of publishing ASC'),
+        label: 'date of publishing ASC'),
+    DropdownMenuEntry(
+        value: Filter('date of publishing DESC'),
+        label: 'date of publishing DESC'),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text('Sorting'),
+          ),
+          DropdownMenu(
+              width: 200.0,
+              label: const Text('label'),
+              hintText: 'hint text',
+              enableFilter: true,
+              dropdownMenuEntries: filters)
+        ],
+      ),
     );
   }
 }
@@ -172,8 +224,8 @@ class HomeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(
-            builder: (context) => HomeItemView()));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomeItemView()));
       }, // Execute the callback function when tapped
 
       child: Container(
