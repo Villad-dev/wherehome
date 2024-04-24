@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class HomeItemView extends StatelessWidget {
+  const HomeItemView({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

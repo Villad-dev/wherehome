@@ -1,8 +1,6 @@
 import 'dart:core';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:wherehome/features/views/login_view.dart';
 import 'package:wherehome/util/themes/main_theme.dart';
 import 'features/views/home_view.dart';
@@ -20,7 +18,7 @@ class WhereHome extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: lightColorTheme,
-      // home: const HomeView(title: 'Flutter Demo Home Page'),
+      home: const LoginView(),
       //home: const HomeView(title: 'Hello WhereHome'),
       routes: {
         '/login': (context) => const LoginView(),

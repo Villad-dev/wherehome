@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../dataset/home.dart';
+import '../../data/models/home.dart';
+
 
 class FavoriteView extends StatelessWidget {
   const FavoriteView({super.key});
@@ -19,7 +20,7 @@ class FavoriteView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Favorites'),
+        title: const Text('Favorites'),
       ),
       body: ListView.builder(
         itemCount: favoriteHomes.length,
@@ -38,7 +39,7 @@ class FavoriteView extends StatelessWidget {
             },
             // Add functionality to remove the home from favorites
             trailing: IconButton(
-              icon: Icon(Icons.favorite),
+              icon: const Icon(Icons.favorite),
               onPressed: () {
                 // Implement functionality to remove the home from favorites
               },

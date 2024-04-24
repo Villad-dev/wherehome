@@ -2,12 +2,12 @@ import 'dart:core';
 
 import 'package:flutter/material.dart';
 import 'package:wherehome/features/views/favourite_view.dart';
-import 'package:wherehome/features/views/homeItem_view.dart';
+import 'package:wherehome/features/views/homeitem_view.dart';
 import 'package:wherehome/features/views/map_view.dart';
 import 'package:wherehome/features/views/profile_view.dart';
 
-import '../dataset/filter.dart';
-import '../dataset/home.dart';
+import '../../data/models/filter.dart';
+import '../../data/models/home.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key, required String title});
@@ -235,7 +235,7 @@ class HomeWidget extends StatelessWidget {
           borderRadius: const BorderRadius.all(Radius.circular(10.0)),
           border: Border.all(
             width: 1.0,
-            color: Colors.white30, //Theme.of(context).canvasColor,
+            color: Colors.white30,
             style: BorderStyle.solid,
           ),
           boxShadow: [

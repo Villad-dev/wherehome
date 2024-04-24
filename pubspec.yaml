@@ -20,6 +20,7 @@ dependencies:
   firebase_auth: ^4.17.5
   firebase_analytics: ^10.8.6
   google_maps_flutter: ^2.1.1
+  http: ^1.2.1
 
 dev_dependencies:
   flutter_test:
@@ -31,8 +32,9 @@ flutter:
   assets:
     - assets/fonts/
     - assets/images/
+    - lib/data/repositories/
+    - assets/countries_flags/
     - assets/icons/
-    - assets/logos/
   fonts:
     - family: Inter
       fonts:

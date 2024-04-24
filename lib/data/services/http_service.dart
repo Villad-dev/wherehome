@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter/foundation.dart';
 
 class ApiService {
   static const String baseUrl = "https://example.com/api";
@@ -11,10 +12,10 @@ class ApiService {
     if (response.statusCode == 200) {
       // Successful GET request
       final data = jsonDecode(response.body);
-      print('GET request successful: $data');
+      debugPrint('GET request successful: $data');
     } else {
       // Handle errors
-      print('GET request failed with status: ${response.statusCode}');
+      debugPrint('GET request failed with status: ${response.statusCode}');
     }
   }
 
@@ -29,10 +30,10 @@ class ApiService {
     if (response.statusCode == 201) {
       // Successful POST request
       final data = jsonDecode(response.body);
-      print('POST request successful: $data');
+      debugPrint('POST request successful: $data');
     } else {
       // Handle errors
-      print('POST request failed with status: ${response.statusCode}');
+      debugPrint('POST request failed with status: ${response.statusCode}');
     }
   }
 
@@ -42,10 +43,10 @@ class ApiService {
 
     if (response.statusCode == 200) {
       // Successful DELETE request
-      print('DELETE request successful');
+      debugPrint('DELETE request successful');
     } else {
       // Handle errors
-      print('DELETE request failed with status: ${response.statusCode}');
+      debugPrint('DELETE request failed with status: ${response.statusCode}');
     }
   }
 }

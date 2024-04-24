@@ -8,7 +8,8 @@ class HomesList extends StatefulWidget {
     'Home 3',
   ];
 
-  @override
+  HomesList({super.key});
+
   Widget build(BuildContext context) {
     return const CustomScrollView(
       slivers: <HomeItem>[],

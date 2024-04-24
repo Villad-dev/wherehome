@@ -1,4 +1,4 @@
-import 'package:wherehome/features/dataset/timetable.dart';
+import 'package:wherehome/data/models/timetable.dart';
 
 import 'Landlord.dart';
 
