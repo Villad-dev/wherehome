@@ -1,9 +1,10 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
-import 'package:wherehome/features/views/login_view.dart';
+import 'package:wherehome/features/log_in/login_view.dart';
+import 'package:wherehome/features/phone_validation/phone_verification.dart';
 import 'package:wherehome/util/themes/main_theme.dart';
-import 'features/views/home_view.dart';
+import 'features/home/home_view.dart';
 
 void main() {
   // runs the WhereHome application
@@ -23,7 +24,8 @@ class WhereHome extends StatelessWidget {
       routes: {
         '/login': (context) => const LoginView(),
         '/register': (context) => const LoginView(), // TODO
-        '/items': (context) => const HomeView(title: 'Tittle'),
+        '/home': (context) => const HomeView(title: 'Tittle'),
+        '/login/validation' : (context) => const PhoneValidation(),
       },
     );
   }

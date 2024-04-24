@@ -1,13 +1,13 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
-import 'package:wherehome/features/views/favourite_view.dart';
-import 'package:wherehome/features/views/homeitem_view.dart';
-import 'package:wherehome/features/views/map_view.dart';
-import 'package:wherehome/features/views/profile_view.dart';
+import 'package:wherehome/features/favourite_home/favourite_view.dart';
+import 'package:wherehome/features/map_search/map_view.dart';
+import 'package:wherehome/features/profile/profile_view.dart';
 
 import '../../data/models/filter.dart';
 import '../../data/models/home.dart';
+import 'widgets/homeitem_view.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key, required String title});
