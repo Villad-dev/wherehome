@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+
 import '../../const/countries.dart';
 
 class DropDownCountriesList extends StatefulWidget {
-  const DropDownCountriesList({super.key});
+  const DropDownCountriesList({super.key, required BuildContext context});
 
   @override
   State<DropDownCountriesList> createState() => _DropDownCountriesListState();
@@ -37,26 +38,30 @@ class _DropDownCountriesListState extends State<DropDownCountriesList> {
         items: countries.entries.map((entry) {
           return DropdownMenuItem(
             value: entry.value.shortName,
-            child: Expanded(
-              flex: 1,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Image.asset(
-                    entry.value.flagPath,
-                    width: 30,
-                    height: 20,
-                  ),
-                  const SizedBox(width: 8),
-                  Text(entry.key),
-                  Text(
-                    '+${entry.value.dialCode}',
-                    textAlign: TextAlign.end,
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                ],
-              ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Image.asset(
+                  entry.value.flagPath,
+                  width: 30,
+                  height: 20,
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  entry.key,
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Theme.of(context).colorScheme.onPrimary),
+                ),
+                Text(
+                  '+${entry.value.dialCode}',
+                  textAlign: TextAlign.end,
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Theme.of(context).colorScheme.onPrimary),
+                ),
+              ],
             ),
           );
         }).toList(),

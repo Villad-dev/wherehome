@@ -39,15 +39,15 @@ class HomeView extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Add your action when the button is pressed
+          Navigator.pushNamed(context, '/home/insert_new_home');
         },
-        elevation: 12, // Add elevation for a shadow effect
-        tooltip: 'Add',
+        elevation: 3, // Add elevation for a shadow effect
+        tooltip: 'Add home',
         child: const Icon(
             Icons.add), // Tooltip text when the button is long-pressed
       ),
       bottomNavigationBar: BottomAppBar(
-        elevation: 8,
+        elevation: 12,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -225,15 +225,16 @@ class HomeWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomeItemView()));
+            context, MaterialPageRoute(builder: (context) => const HomeItemView()));
       }, // Execute the callback function when tapped
 
       child: Container(
         alignment: Alignment.topCenter,
         decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.tertiaryContainer,
           shape: BoxShape.rectangle,
           borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-          border: Border.all(
+         /* border: Border.all(
             width: 1.0,
             color: Colors.white30,
             style: BorderStyle.solid,
@@ -241,11 +242,11 @@ class HomeWidget extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               color: Colors.grey.withOpacity(0.5), // Shadow color
-              spreadRadius: 2, // Spread radius
+              spreadRadius: 1, // Spread radius
               blurRadius: 5, // Blur radius
               offset: const Offset(0, 3), // Shadow position
             ),
-          ],
+          ],*/
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -267,7 +268,7 @@ class HomeWidget extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              "${homeDataSet.address} ${homeDataSet.address_num}",
+              "${homeDataSet.address} ${homeDataSet.addressNum}",
               textAlign: TextAlign.center, // Align text to center
             ),
             Text(

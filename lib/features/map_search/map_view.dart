@@ -1,16 +1,35 @@
-
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class MapView extends StatefulWidget {
   const MapView({super.key});
 
   @override
-  _MapViewState createState() => _MapViewState();
+  MapViewState createState() => MapViewState();
 }
 
-class _MapViewState extends State<MapView> {
-  late GoogleMapController mapController;
+class MapViewState extends State<MapView> {
+  late final Permission permission;
+  PermissionStatus permissionStatus = PermissionStatus.denied;
+  late MapboxMap mapboxMap;
+
+  @override
+  void initState() {
+    super.initState();
+    requestPermission();
+  }
+
+  Future<void> requestPermission() async {
+    final status = await Permission.location.request();
+    setState(() {
+      permissionStatus = status;
+    });
+  }
+
+  _onMapCreated(MapboxMap mapboxMap) {
+    this.mapboxMap = mapboxMap;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,14 +37,8 @@ class _MapViewState extends State<MapView> {
       appBar: AppBar(
         title: const Text('Map View'),
       ),
-      body: GoogleMap(
-        onMapCreated: (GoogleMapController controller) {
-          mapController = controller;
-        },
-        initialCameraPosition: const CameraPosition(
-          target: LatLng(37.7749, -122.4194), // San Francisco coordinates
-          zoom: 12,
-        ),
+      body: MapWidget(
+        onMapCreated: _onMapCreated,
       ),
     );
   }

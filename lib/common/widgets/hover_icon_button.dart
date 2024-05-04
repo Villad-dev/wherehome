@@ -7,9 +7,9 @@ class HoverIconButton extends StatefulWidget {
   const HoverIconButton({super.key, this.onPressed, required this.icon});
 
   @override
-  _HoverIconButtonState createState() => _HoverIconButtonState();
+  HoverIconButtonState createState() => HoverIconButtonState();
 }
-class _HoverIconButtonState extends State<HoverIconButton> {
+class HoverIconButtonState extends State<HoverIconButton> {
   @override
   Widget build(BuildContext context) {
     return IconButton(

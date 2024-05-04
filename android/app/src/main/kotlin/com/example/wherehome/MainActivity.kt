@@ -1,4 +1,4 @@
-package com.example.wherehome
+package com.minimastic.wherehome
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -19,8 +19,9 @@ dependencies:
   cloud_firestore: ^4.15.5
   firebase_auth: ^4.17.5
   firebase_analytics: ^10.8.6
-  google_maps_flutter: ^2.1.1
   http: ^1.2.1
+  mapbox_maps_flutter: ^1.1.0
+  permission_handler: ^11.3.1
 
 dev_dependencies:
   flutter_test:

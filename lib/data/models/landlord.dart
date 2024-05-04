@@ -1,6 +1,6 @@
 class Landlord{
   final String name;
-  final int AvailableHomes;
+  final int availableHomes;
 
-  Landlord(this.name, this.AvailableHomes);
+  Landlord(this.name, this.availableHomes);
 }

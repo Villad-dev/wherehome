@@ -32,7 +32,7 @@ class FavoriteView extends StatelessWidget {
               backgroundImage: AssetImage(home.imagePath),
             ),
             title: Text(home.address),
-            subtitle: Text(home.address_num),
+            subtitle: Text(home.addressNum),
             // Add functionality to view details of the favorite home
             onTap: () {
               // Implement navigation to view details of the selected home

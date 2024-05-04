@@ -1,31 +1,59 @@
 import 'package:flutter/material.dart';
 
-// Light color theme
+
 final ThemeData lightColorTheme = ThemeData(
   colorScheme: const ColorScheme(
-      brightness: Brightness.light,
-      background: Color.fromARGB(255, 242, 249, 251),
-      onBackground: Color.fromARGB(244, 0, 0, 0),
-      primary: Color.fromARGB(244, 51, 51, 51),
-      onPrimary: Color.fromARGB(244, 225, 239, 255),
-      secondary: Color.fromARGB(244, 25, 60, 104),
-      onSecondary: Color.fromARGB(244, 223, 132, 56),
-      error: Color.fromARGB(244, 255, 0, 78),
-      onError: Color.fromARGB(244, 255, 255, 255),
-      surface: Color.fromARGB(244, 171, 199, 230),
-      onSurface: Color.fromARGB(244, 31, 32, 31), // All main colors
-      tertiaryContainer: Color.fromARGB(244, 174, 121, 220),
-      onTertiaryContainer: Color.fromARGB(244, 68, 15, 106),
-      primaryContainer: Color.fromARGB(244, 25, 60, 104),
-      onPrimaryContainer: Color.fromARGB(244, 141, 54, 160),
-      ),
-
+    brightness: Brightness.light,
+    background: Color.fromARGB(255, 242, 249, 251),
+    onBackground: Color.fromARGB(255, 78, 81, 82),
+    primary: Color.fromARGB(255, 78, 81, 82),
+    onPrimary: Color.fromARGB(255, 30, 30, 30),
+    primaryContainer: Color.fromARGB(244, 25, 60, 104),
+    onPrimaryContainer: Color.fromARGB(244, 181, 200, 227),
+    secondary: Color.fromARGB(244, 25, 60, 104),
+    onSecondary: Color.fromARGB(244, 223, 132, 56),
+    error: Color.fromARGB(244, 255, 0, 78),
+    onError: Color.fromARGB(244, 255, 255, 255),
+    surface: Color.fromARGB(244, 171, 199, 230),
+    onSurface: Color.fromARGB(244, 31, 32, 31),
+    tertiaryContainer: Color.fromARGB(255, 190, 231, 255),
+    onTertiaryContainer: Color.fromARGB(244, 8, 13, 47),
+  ),
+  toggleButtonsTheme: ToggleButtonsThemeData(
+    textStyle: const TextStyle(color: Colors.white),
+    color: Colors.blue,
+    selectedColor: Colors.lightBlue,
+    disabledColor: Colors.grey,
+    fillColor: Colors.blue.withOpacity(0.2),
+    focusColor: Colors.blueAccent,
+    highlightColor: Colors.blueAccent.withOpacity(0.5),
+    hoverColor: Colors.blueAccent.withOpacity(0.5),
+    splashColor: Colors.blueAccent.withOpacity(0.5),
+    borderColor: Colors.blue,
+    selectedBorderColor: Colors.lightBlue,
+    disabledBorderColor: Colors.grey,
+    borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+    borderWidth: 2.0,
+  ),
   fontFamily: 'Inter',
-  primaryColor: Colors.blue,
+  primaryColor: const Color.fromARGB(145, 46, 148, 255),
 );
 
 // Dark color theme
 final ThemeData darkColorTheme = ThemeData(
+  colorScheme: const ColorScheme(
+    brightness: Brightness.dark,
+    primary: Color.fromARGB(244, 31, 32, 31),
+    onPrimary: Color.fromARGB(244, 232, 232, 232),
+    secondary: Color.fromARGB(244, 25, 60, 104),
+    onSecondary: Color.fromARGB(244, 225, 239, 255),
+    error:  Color.fromARGB(244, 255, 0, 78),
+    background: Color.fromARGB(244, 38, 38, 38),
+    surface: Color.fromARGB(244, 0, 234, 255),
+    onError: Color.fromARGB(244, 232, 203, 214),
+    onBackground: Color.fromARGB(244, 168, 175, 168),
+    onSurface: Color.fromARGB(244, 255, 255, 255),
+  ),
   fontFamily: 'KodeMono',
   primaryColor: Colors.black,
 );
