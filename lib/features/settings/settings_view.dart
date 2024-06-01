@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import 'widgets/languageDialogWidget.dart';
@@ -9,11 +10,9 @@ class SettingsView extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) {
-        return LanguageSelectionDialog(
-          onLocaleSelected: (locale) {
-            // Here you need to implement the code to change the app's locale
-          },
-        );
+        return LanguageSelectionDialog(onLocaleSelected: (locale) {
+          context.setLocale(locale);
+        });
       },
     );
   }
@@ -22,28 +21,28 @@ class SettingsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        title: const Text('settings').tr(),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
           ListTile(
-            title: const Text('Theme'),
-            subtitle: const Text('Change the app theme'),
+            title: const Text('theme').tr(),
+            subtitle: const Text('theme_description').tr(),
             leading: const Icon(Icons.palette),
             onTap: () {},
           ),
           const Divider(),
           ListTile(
-            title: const Text('Notifications'),
-            subtitle: const Text('Enable or disable notifications'),
+            title: const Text('notifications').tr(),
+            subtitle: const Text('notifications_descriptions').tr(),
             leading: const Icon(Icons.notifications),
             onTap: () {},
           ),
           const Divider(),
           ListTile(
-            title: const Text('Language'),
-            subtitle: const Text('Change the app default language'),
+            title: const Text('language').tr(),
+            subtitle: const Text('language_description').tr(),
             leading: const Icon(Icons.language),
             onTap: () {
               _showLanguageSelectionDialog(context);

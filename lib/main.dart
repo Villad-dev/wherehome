@@ -1,16 +1,27 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:localization/localization.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:wherehome/features/home_insertion/inserthome_view.dart';
 import 'package:wherehome/features/log_in/login_view.dart';
 import 'package:wherehome/features/phone_validation/phone_verification.dart';
 import 'package:wherehome/util/themes/main_theme.dart';
 
+import 'const/languages.dart';
 import 'features/home/home_view.dart';
 
-void main() {
-  runApp(const WhereHome());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+  final Languages languages = Languages();
+  final supported = languages.getSupportedLocales();
+  runApp(
+    EasyLocalization(
+      supportedLocales: supported,
+      fallbackLocale: supported[0],
+      path: 'assets/i18n',
+      child: WhereHome(),
+    ),
+  );
   const token = String.fromEnvironment('SDK_REGISTRY_TOKEN');
   MapboxOptions.setAccessToken(token);
 }
@@ -20,26 +31,7 @@ class WhereHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LocalJsonLocalization.delegate.directories = ['lib/i18n'];
-
     return MaterialApp(
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        LocalJsonLocalization.delegate,
-      ],
-      supportedLocales: const [
-        Locale('en', 'US'),
-        Locale('uk', 'UK'),
-        Locale('pl', 'PL'),
-      ],
-      localeResolutionCallback: (locale, supportedLocales) {
-        if (supportedLocales.contains(locale)) {
-          return locale;
-        }
-        return const Locale('uk', 'UK');
-      },
-      locale: const Locale('pl', 'PL'),
       title: 'Flutter Demo',
       theme: lightColorTheme,
       home: const LoginView(),
@@ -50,6 +42,9 @@ class WhereHome extends StatelessWidget {
         '/home/insert_new_home': (context) => const InsertHome(),
         '/login/validation': (context) => const PhoneValidation(),
       },
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
     );
   }
 }

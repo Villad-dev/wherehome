@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
-import 'package:permission_handler/permission_handler.dart' as permissionhandler;
+import 'package:permission_handler/permission_handler.dart'
+    as permissionhandler;
 
 class MapView extends StatefulWidget {
   const MapView({super.key});
@@ -14,7 +16,8 @@ class MapViewState extends State<MapView> {
   Location location = Location();
   late LocationData currentLocation;
   late final permissionhandler.Permission permission;
-  permissionhandler.PermissionStatus permissionStatus = permissionhandler.PermissionStatus.denied;
+  permissionhandler.PermissionStatus permissionStatus =
+      permissionhandler.PermissionStatus.denied;
   late MapboxMap mapboxMap;
 
   @override
@@ -38,7 +41,7 @@ class MapViewState extends State<MapView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Map View'),
+        title: const Text('map_view').tr(),
       ),
       body: MapWidget(
         styleUri: 'mapbox://styles/villad/clvs1warh01wa01qu1rfcc9jh',

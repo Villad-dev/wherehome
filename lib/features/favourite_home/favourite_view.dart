@@ -1,7 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/models/home.dart';
-
 
 class FavoriteView extends StatelessWidget {
   const FavoriteView({super.key});
@@ -20,7 +20,7 @@ class FavoriteView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Favorites'),
+        title: const Text('favorites').tr(),
       ),
       body: ListView.builder(
         itemCount: favoriteHomes.length,

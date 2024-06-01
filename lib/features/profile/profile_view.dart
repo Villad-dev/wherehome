@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:wherehome/features/settings/settings_view.dart';
 
@@ -8,13 +9,16 @@ class ProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        title: const Text('profile').tr(),
         actions: [
-          IconButton(onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(
-                    builder: (context) => const SettingsView()));
-          }, icon: const Icon(Icons.settings))
+          IconButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SettingsView()));
+              },
+              icon: const Icon(Icons.settings))
         ],
       ),
       body: Padding(
@@ -25,7 +29,7 @@ class ProfileView extends StatelessWidget {
             const CircleAvatar(
               radius: 50,
               // Replace the backgroundImage with your user's profile picture
-              backgroundImage: AssetImage('assets/profile_image.jpg'),
+              //backgroundImage: AssetImage('assets/profile_image.jpg'),
             ),
             const SizedBox(height: 16),
             const Text(
@@ -48,7 +52,7 @@ class ProfileView extends StatelessWidget {
               onPressed: () {
                 // Add functionality to edit profile
               },
-              child: const Text('Edit Profile'),
+              child: const Text('edit_profile').tr(),
             ),
           ],
         ),

@@ -1,5 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:localization/localization.dart';
 import 'package:wherehome/common/widgets/dropdown_countries_list.dart';
 import 'package:wherehome/common/widgets/hover_icon_button.dart';
 import 'package:wherehome/common/widgets/localized_textfield.dart';
@@ -53,7 +53,7 @@ class _LoginViewState extends State<LoginView> {
                     alignment: Alignment.centerLeft,
                     height: 30,
                     child: Text(
-                      'mobile_request_help'.i18n(), // Check localization
+                      'mobile_request_help'.tr(), // Check localization
                       style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w600,
@@ -65,7 +65,7 @@ class _LoginViewState extends State<LoginView> {
                     alignment: Alignment.centerLeft,
                     height: 100,
                     child: Text(
-                      'verification_code_help'.i18n(), // Check localization
+                      'verification_code_help'.tr(), // Check localization
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w300,
@@ -78,7 +78,9 @@ class _LoginViewState extends State<LoginView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const DropDownCountriesList(),
-                      const SizedBox(width: 15,),
+                      const SizedBox(
+                        width: 15,
+                      ),
                       Expanded(
                         child: LocalizedTextField(
                           _phone,
@@ -99,7 +101,7 @@ class _LoginViewState extends State<LoginView> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
                         child: Text(
-                          'or'.i18n(),
+                          'or'.tr(),
                           style: TextStyle(
                             fontSize: 16,
                             color: Theme.of(context)

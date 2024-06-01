@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class SwitchHomeType extends StatefulWidget {
@@ -23,14 +24,14 @@ class _SwitchHomeTypeState extends State<SwitchHomeType> {
         maxHeight: 55,
         //maxWidth: double.maxFinite,
         minHeight: 40,
-        minWidth: (MediaQuery.of(context).size.width - 50)/2,
+        minWidth: (MediaQuery.of(context).size.width - 50) / 2,
       ),
       isSelected: homeType,
-      children: const [
-        Text('Rent'),
-        Text('Sell'),
+      children: [
+        Text('add_rent').tr(),
+        Text('add_sell').tr(),
       ],
-      onPressed: (int index){
+      onPressed: (int index) {
         setState(() {
           switchToggle(index);
         });
@@ -38,7 +39,7 @@ class _SwitchHomeTypeState extends State<SwitchHomeType> {
     );
   }
 
-  void switchToggle(int selectedIndex){
+  void switchToggle(int selectedIndex) {
     for (int buttonIndex = 0; buttonIndex < homeType.length; buttonIndex++) {
       if (buttonIndex == selectedIndex) {
         homeType[buttonIndex] = true;

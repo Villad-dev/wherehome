@@ -1,5 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:localization/localization.dart';
 
 class LocalizedTextField extends StatelessWidget {
   const LocalizedTextField(this.textController, this.textHint, {super.key});
@@ -19,7 +19,7 @@ class LocalizedTextField extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(16.0),
         ),
-        hintText: textHint.i18n(),
+        hintText: textHint.tr(),
       ),
     );
   }

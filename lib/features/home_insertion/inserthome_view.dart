@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:wherehome/features/home_insertion/widgets/filter_features.dart';
@@ -37,14 +38,14 @@ class _InsertHomeState extends State<InsertHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Insert Home'),
+        title: const Text('add_home').tr(),
       ),
       bottomNavigationBar: BottomAppBar(
         child: ElevatedButton(
           onPressed: () {},
-          child: const Text(
-            'Add home',
-            style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
+          child: Text(
+            'add_button_add'.tr(),
+            style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
           ),
         ),
       ),
@@ -67,9 +68,9 @@ class _InsertHomeState extends State<InsertHome> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      'Tittle',
-                      style: TextStyle(
+                    Text(
+                      'add_title'.tr(),
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
                       ),
@@ -96,9 +97,9 @@ class _InsertHomeState extends State<InsertHome> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          'Price',
-                          style: TextStyle(
+                        Text(
+                          'add_price'.tr(),
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
                           ),
@@ -107,8 +108,8 @@ class _InsertHomeState extends State<InsertHome> {
                           width: 200,
                           child: TextField(
                             controller: priceInputController,
-                            decoration: const InputDecoration(
-                              hintText: 'Enter the price',
+                            decoration: InputDecoration(
+                              hintText: 'add_price_enter'.tr(),
                             ),
                           ),
                         ),
@@ -117,9 +118,9 @@ class _InsertHomeState extends State<InsertHome> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        const Text(
-                          'Area',
-                          style: TextStyle(
+                        Text(
+                          'add_area'.tr(),
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w600,
                           ),
@@ -138,12 +139,12 @@ class _InsertHomeState extends State<InsertHome> {
                   ],
                 ),
                 const SizedBox(height: 16),
-                const Column(
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Property type',
-                      style: TextStyle(
+                      'add_property_type'.tr(),
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
                       ),
@@ -152,40 +153,40 @@ class _InsertHomeState extends State<InsertHome> {
                   ],
                 ),
                 const SizedBox(height: 16),
-                const Column(
+                Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Rooms',
-                      style: TextStyle(
+                      'add_rooms'.tr(),
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    SwitchButtonsRooms()
-                  ],
-                ),
-                const SizedBox(height: 16),
-                const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Filters',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    FilterFeatures(),
+                    const SwitchButtonsRooms()
                   ],
                 ),
                 const SizedBox(height: 16),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      'Location',
-                      style: TextStyle(
+                    Text(
+                      'add_filters'.tr(),
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const FilterFeatures(),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'add_location'.tr(),
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
                       ),

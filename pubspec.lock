@@ -73,6 +73,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.0.2+3"
+  easy_localization:
+    dependency: "direct main"
+    description:
+      name: easy_localization
+      sha256: fa59bcdbbb911a764aa6acf96bbb6fa7a5cf8234354fc45ec1a43a0349ef0201
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.7"
+  easy_logger:
+    dependency: transitive
+    description:
+      name: easy_logger
+      sha256: c764a6e024846f33405a2342caf91c62e357c24b02c04dbc712ef232bf30ffb7
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.2"
   enum_to_string:
     dependency: transitive
     description:
@@ -118,14 +134,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.2"
-  flutter_localization:
-    dependency: "direct main"
-    description:
-      name: flutter_localization
-      sha256: faaeb1eba307473032e2c2af737f36ced61fc98735608410d0a6d9c231b50912
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.0"
   flutter_localizations:
     dependency: transitive
     description: flutter
@@ -237,14 +245,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
-  localization:
-    dependency: "direct main"
-    description:
-      name: localization
-      sha256: "9fa21644b75ca3fe844f8f115d03cd6fdc675054dd9aab6c5de5861145ea57b5"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.1"
   location:
     dependency: "direct main"
     description:
@@ -301,6 +301,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.11.0"
+  nested:
+    dependency: transitive
+    description:
+      name: nested
+      sha256: "03bac4c528c64c95c722ec99280375a6f2fc708eec17c7b3f07253b626cd2a20"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   path:
     dependency: transitive
     description:
@@ -397,6 +405,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
+  provider:
+    dependency: "direct main"
+    description:
+      name: provider
+      sha256: c8a055ee5ce3fd98d6fc872478b03823ffdb448699c6ebdbbc71d59b596fd48c
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.1.2"
   rbush:
     dependency: transitive
     description:

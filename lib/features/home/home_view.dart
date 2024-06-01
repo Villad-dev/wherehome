@@ -1,5 +1,6 @@
 import 'dart:core';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:wherehome/features/favourite_home/favourite_view.dart';
 import 'package:wherehome/features/map_search/map_view.dart';
@@ -16,7 +17,7 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Hola'),
+        title: const Text('WhereHome'),
         actions: [
           IconButton(
             onPressed: () {
@@ -141,7 +142,7 @@ class _SearchWidgetState extends State<SearchWidget> {
               controller.openView();
             },
             leading: const Icon(Icons.search),
-            hintText: 'Find home',
+            hintText: 'find_home'.tr(),
             constraints: const BoxConstraints(
               maxWidth: 400,
               minWidth: 100,
@@ -178,15 +179,13 @@ class FiltersWidget extends StatefulWidget {
 
 class _FiltersWidgetState extends State<FiltersWidget> {
   List<DropdownMenuEntry<Filter>> filters = [
-    DropdownMenuEntry(value: Filter('sorting'), label: 'sorting'),
-    DropdownMenuEntry(value: Filter('promotion ASC'), label: 'promotion ASC'),
-    DropdownMenuEntry(value: Filter('promotion DESC'), label: 'promotion DESC'),
+    DropdownMenuEntry(value: Filter('promotion ASC'), label: 'asc_price'.tr()),
     DropdownMenuEntry(
-        value: Filter('date of publishing ASC'),
-        label: 'date of publishing ASC'),
+        value: Filter('promotion DESC'), label: 'desc_price'.tr()),
     DropdownMenuEntry(
-        value: Filter('date of publishing DESC'),
-        label: 'date of publishing DESC'),
+        value: Filter('date of publishing ASC'), label: 'asc_area'.tr()),
+    DropdownMenuEntry(
+        value: Filter('date of publishing DESC'), label: 'desc_area'.tr()),
   ];
 
   @override
@@ -196,14 +195,14 @@ class _FiltersWidgetState extends State<FiltersWidget> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text('Sorting'),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: const Text('Sorting').tr(),
           ),
           DropdownMenu(
               width: 200.0,
-              label: const Text('label'),
-              hintText: 'hint text',
+              //label: const Text('label'),
+              hintText: 'sorting_type'.tr(),
               enableFilter: true,
               dropdownMenuEntries: filters)
         ],
@@ -224,8 +223,8 @@ class HomeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const HomeItemView()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const HomeItemView()));
       }, // Execute the callback function when tapped
 
       child: Container(
@@ -234,7 +233,7 @@ class HomeWidget extends StatelessWidget {
           color: Theme.of(context).colorScheme.tertiaryContainer,
           shape: BoxShape.rectangle,
           borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-         /* border: Border.all(
+          /* border: Border.all(
             width: 1.0,
             color: Colors.white30,
             style: BorderStyle.solid,

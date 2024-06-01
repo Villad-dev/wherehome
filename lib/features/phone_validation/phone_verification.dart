@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import 'widgets/mytextfield.dart';
@@ -55,15 +56,15 @@ class _PhoneValidationState extends State<PhoneValidation> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Text(
-                "Enter the code",
+            Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: const Text(
+                "enter_code",
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.w500,
                 ),
-              ),
+              ).tr(),
             ),
             Padding(
               padding: const EdgeInsets.all(10.0),
@@ -100,9 +101,12 @@ class _PhoneValidationState extends State<PhoneValidation> {
                 ],
               ),
             ),
-            TextButton(onPressed: () {
-              _verifyCode(context);
-            }, child: const Text('Resend code'))
+            TextButton(
+              onPressed: () {
+                _verifyCode(context);
+              },
+              child: const Text('resend_code').tr(),
+            ),
           ],
         ),
       ),
