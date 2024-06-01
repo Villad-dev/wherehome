@@ -76,11 +76,8 @@ class _InsertHomeState extends State<InsertHome> {
                     ),
                     TextField(
                       controller: tittleInputController,
-                      decoration: InputDecoration(
-                        hintText: 'Enter the price',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16.0),
-                        ),
+                      decoration: const InputDecoration(
+                        hintText: 'Enter the tittle',
                       ),
                     ),
                   ],
@@ -110,11 +107,8 @@ class _InsertHomeState extends State<InsertHome> {
                           width: 200,
                           child: TextField(
                             controller: priceInputController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               hintText: 'Enter the price',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(16.0),
-                              ),
                             ),
                           ),
                         ),
@@ -134,11 +128,8 @@ class _InsertHomeState extends State<InsertHome> {
                           width: 120,
                           child: TextField(
                             controller: areaInputController,
-                            decoration: InputDecoration(
-                              hintText: '',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(16.0),
-                              ),
+                            decoration: const InputDecoration(
+                              hintText: 'm2',
                             ),
                           ),
                         ),

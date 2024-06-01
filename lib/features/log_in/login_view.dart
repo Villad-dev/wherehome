@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-
-import '../../common/widgets/dropdown_countries_list.dart';
-import '../../common/widgets/hover_icon_button.dart';
+import 'package:localization/localization.dart';
+import 'package:wherehome/common/widgets/dropdown_countries_list.dart';
+import 'package:wherehome/common/widgets/hover_icon_button.dart';
+import 'package:wherehome/common/widgets/localized_textfield.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -31,129 +32,150 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          const SizedBox(
+      resizeToAvoidBottomInset: true, // Ensure keyboard resize behavior
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SizedBox(
               height: 200,
               width: double.maxFinite,
-              child: Image(
-                  image: AssetImage('assets/images/login_image.png'),
-                  fit: BoxFit.fill)),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(children: [
-              Container(
-                //Tittle @String Enter your mobile number
-                alignment: Alignment.centerLeft,
-                height: 30,
-                child: const Text('Enter your mobile number',
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    textAlign: TextAlign.center),
+              child: Image.asset(
+                'assets/images/login_image.png',
+                fit: BoxFit.fill,
               ),
-              Container(
-                //Subtitle @String We'll send you a verification code
-                alignment: Alignment.centerLeft,
-                height: 50,
-                child: const Text("We'll send you a verification code.",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
-                    textAlign: TextAlign.center),
-              ),
-              Row(
-                //Dropdown and input field
-                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
                 children: [
-                  DropDownCountriesList(
-                    context: context,
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    height: 30,
+                    child: Text(
+                      'mobile_request_help'.i18n(), // Check localization
+                      style: const TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                  Expanded(
-                    child: TextField(
-                      maxLength: 10,
-                      controller: _phone,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16.0),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    height: 100,
+                    child: Text(
+                      'verification_code_help'.i18n(), // Check localization
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w300,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Flex(
+                    direction: Axis.horizontal,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const DropDownCountriesList(),
+                      const SizedBox(width: 15,),
+                      Expanded(
+                        child: LocalizedTextField(
+                          _phone,
+                          'mobile_request_help_short',
                         ),
-                        hintText: 'Enter your phone',
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Divider(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onPrimary, // Check color
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
+                        child: Text(
+                          'or'.i18n(),
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .onPrimary, // Check color
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Divider(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onPrimary, // Check color
+                        ),
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(70, 0, 70, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        HoverIconButton(
+                          onPressed: () {
+                            // TODO: Implement Google login
+                          },
+                          icon: Image.asset(
+                              'assets/icons/google.png'), // Check image path
+                        ),
+                        HoverIconButton(
+                          onPressed: () {
+                            // TODO: Implement Apple login
+                          },
+                          icon: Image.asset(
+                              'assets/icons/apple.png'), // Check image path
+                        ),
+                        HoverIconButton(
+                          onPressed: () {
+                            // TODO: Implement Facebook login
+                          },
+                          icon: Image.asset(
+                              'assets/icons/facebook.png'), // Check image path
+                        )
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                    child: OutlinedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(
+                            context, '/login/validation'); // Check navigation
+                      },
+                      style: ButtonStyle(
+                        minimumSize: MaterialStateProperty.all(
+                            const Size(double.maxFinite, 60)),
+                        maximumSize: MaterialStateProperty.all(
+                            const Size(double.maxFinite, 150)),
+                      ),
+                      child: Text(
+                        "Where's Home",
+                        style: TextStyle(
+                          fontSize: 22,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onPrimary, // Check color
+                        ),
                       ),
                     ),
-                  ),
+                  )
                 ],
               ),
-              //Splitter with or in the middle
-              Row(
-                children: [
-                  Expanded(
-                      child: Divider(
-                    color: Theme.of(context).colorScheme.onPrimary,
-                  )),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                    child: Text(
-                      "or",
-                      style: TextStyle(
-                          fontSize: 16,
-                          color: Theme.of(context).colorScheme.onPrimary),
-                    ),
-                  ),
-                  Expanded(
-                    child: Divider(
-                      color: Theme.of(context).colorScheme.onPrimary,
-                    ),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(70, 0, 70, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    HoverIconButton(
-                        onPressed: () {
-                          //TODO
-                        },
-                        icon: Image.asset('assets/icons/google.png')),
-                    HoverIconButton(
-                        onPressed: () {
-                          //TODO
-                        },
-                        icon: Image.asset('assets/icons/apple.png')),
-                    HoverIconButton(
-                      onPressed: () {
-                        //TODO
-                      },
-                      icon: Image.asset('assets/icons/facebook.png'),
-                    )
-                  ],
-                ),
-              ),
-              //Where's Home button
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                child: OutlinedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/login/validation');
-                  },
-                  style: ButtonStyle(
-                      minimumSize: MaterialStateProperty.all(
-                          const Size(double.maxFinite, 60)),
-                      maximumSize: MaterialStateProperty.all(
-                          const Size(double.maxFinite, 150))),
-                  child: Text(
-                    "Where's Home",
-                    style: TextStyle(
-                        fontSize: 22,
-                        color: Theme.of(context).colorScheme.onPrimary),
-                  ),
-                ),
-              )
-            ]),
-          ),
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -249,10 +249,7 @@ class HomeWidget extends StatelessWidget {
           ],*/
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          // Center the content vertically
           crossAxisAlignment: CrossAxisAlignment.center,
-          // Center the content horizontally
           children: [
             Align(
               alignment: Alignment.topCenter,
@@ -266,7 +263,6 @@ class HomeWidget extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 8),
             Text(
               "${homeDataSet.address} ${homeDataSet.addressNum}",
               textAlign: TextAlign.center, // Align text to center

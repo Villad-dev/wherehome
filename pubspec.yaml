@@ -15,13 +15,13 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.6
-  firebase_core: ^2.25.4
-  cloud_firestore: ^4.15.5
-  firebase_auth: ^4.17.5
-  firebase_analytics: ^10.8.6
   http: ^1.2.1
   mapbox_maps_flutter: ^1.1.0
   permission_handler: ^11.3.1
+  location: ^6.0.1
+  latlong2: ^0.9.1
+  localization: ^2.1.1
+  flutter_localization: ^0.2.0
 
 dev_dependencies:
   flutter_test:
@@ -31,6 +31,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
+    - lib/i18n/
     - assets/fonts/
     - assets/images/
     - lib/data/repositories/

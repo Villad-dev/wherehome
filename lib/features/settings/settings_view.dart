@@ -1,7 +1,22 @@
 import 'package:flutter/material.dart';
 
+import 'widgets/languageDialogWidget.dart';
+
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
+
+  void _showLanguageSelectionDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return LanguageSelectionDialog(
+          onLocaleSelected: (locale) {
+            // Here you need to implement the code to change the app's locale
+          },
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,23 +31,25 @@ class SettingsView extends StatelessWidget {
             title: const Text('Theme'),
             subtitle: const Text('Change the app theme'),
             leading: const Icon(Icons.palette),
-            onTap: () {
-              // Navigate to the theme settings screen
-              // You can implement this navigation logic here
-            },
+            onTap: () {},
           ),
           const Divider(),
           ListTile(
             title: const Text('Notifications'),
             subtitle: const Text('Enable or disable notifications'),
             leading: const Icon(Icons.notifications),
+            onTap: () {},
+          ),
+          const Divider(),
+          ListTile(
+            title: const Text('Language'),
+            subtitle: const Text('Change the app default language'),
+            leading: const Icon(Icons.language),
             onTap: () {
-              // Navigate to the notifications settings screen
-              // You can implement this navigation logic here
+              _showLanguageSelectionDialog(context);
             },
           ),
           const Divider(),
-          // Add more settings as needed
         ],
       ),
     );
