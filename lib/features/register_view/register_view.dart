@@ -185,10 +185,13 @@ class _RegisterViewState extends State<RegisterView> {
                       ],
                     ),
                   ),
-                  ErrorLogText(
-                    hasProblems:
-                        _errorLog.errorPasswords || _errorLog.errorEmptyFields,
-                    message: _errorLog.errorMessage,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ErrorLogText(
+                      hasProblems: _errorLog.errorPasswords ||
+                          _errorLog.errorEmptyFields,
+                      message: _errorLog.errorMessage,
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),

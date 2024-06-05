@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 
 class HttpController {
-  final baseUrl = 'http://172.27.96.1:8080';
+  final baseUrl = 'http://172.29.16.1:8080';
 
   Future<http.Response> sendGetRequest() async {
     final url = Uri.parse(baseUrl);
