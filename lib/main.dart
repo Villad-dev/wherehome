@@ -4,6 +4,7 @@ import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
 import 'package:wherehome/features/home_insertion/inserthome_view.dart';
 import 'package:wherehome/features/log_in/login_view.dart';
 import 'package:wherehome/features/phone_validation/phone_verification.dart';
+import 'package:wherehome/features/register_view/register_view.dart';
 import 'package:wherehome/util/themes/main_theme.dart';
 
 import 'const/languages.dart';
@@ -19,7 +20,7 @@ void main() async {
       supportedLocales: supported,
       fallbackLocale: supported[0],
       path: 'assets/i18n',
-      child: WhereHome(),
+      child: const WhereHome(),
     ),
   );
   const token = String.fromEnvironment('SDK_REGISTRY_TOKEN');
@@ -37,7 +38,7 @@ class WhereHome extends StatelessWidget {
       home: const LoginView(),
       routes: {
         '/login': (context) => const LoginView(),
-        '/register': (context) => const LoginView(),
+        '/register': (context) => const RegisterView(),
         '/home': (context) => const HomeView(title: 'Tittle'),
         '/home/insert_new_home': (context) => const InsertHome(),
         '/login/validation': (context) => const PhoneValidation(),

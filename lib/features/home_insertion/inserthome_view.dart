@@ -149,7 +149,7 @@ class _InsertHomeState extends State<InsertHome> {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    SwitchPropertyType()
+                    const SwitchPropertyType()
                   ],
                 ),
                 const SizedBox(height: 16),

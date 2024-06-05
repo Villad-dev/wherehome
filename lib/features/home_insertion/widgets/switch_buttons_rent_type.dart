@@ -28,8 +28,8 @@ class _SwitchHomeTypeState extends State<SwitchHomeType> {
       ),
       isSelected: homeType,
       children: [
-        Text('add_rent').tr(),
-        Text('add_sell').tr(),
+        const Text('add_rent').tr(),
+        const Text('add_sell').tr(),
       ],
       onPressed: (int index) {
         setState(() {

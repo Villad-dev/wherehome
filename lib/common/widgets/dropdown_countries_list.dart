@@ -3,46 +3,53 @@ import 'package:flutter/material.dart';
 import '../../const/countries.dart';
 
 class DropDownCountriesList extends StatefulWidget {
-  const DropDownCountriesList({super.key});
+  const DropDownCountriesList({
+    super.key,
+    required this.onCodeChanged,
+  });
+
+  final void Function(int) onCodeChanged;
 
   @override
   State<DropDownCountriesList> createState() => _DropDownCountriesListState();
 }
 
 class _DropDownCountriesListState extends State<DropDownCountriesList> {
-  String? selectedCountry;
+  late int _codeDial;
+  String _countryName = 'Poland';
 
   @override
   void initState() {
     super.initState();
-    selectedCountry = countries['Poland']?.shortName;
+    _codeDial = countries[_countryName]!.dialCode;
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(
-          width: 0.5,
-        ),
+        border: Border.all(width: 0.5),
         borderRadius: BorderRadius.circular(16.0),
       ),
       child: DropdownButtonHideUnderline(
-        child: DropdownButton(
+        child: DropdownButton<String>(
           itemHeight: 65,
           alignment: Alignment.center,
-          value: selectedCountry,
           isExpanded: false,
-          isDense: false,
-          onChanged: (String? newValue) {
-            setState(() {
-              selectedCountry = newValue;
-            });
+          value: _countryName,
+          onChanged: (newCountry) {
+            if (newCountry != null) {
+              setState(() {
+                _countryName = newCountry;
+                _codeDial = countries[newCountry]!.dialCode;
+                widget.onCodeChanged(_codeDial);
+              });
+            }
           },
           borderRadius: const BorderRadius.all(Radius.circular(10)),
           items: countries.entries.map((entry) {
-            return DropdownMenuItem(
-              value: entry.value.shortName,
+            return DropdownMenuItem<String>(
+              value: entry.key,
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Row(

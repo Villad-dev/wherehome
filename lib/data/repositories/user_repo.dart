@@ -1,42 +1,30 @@
-// ignore: public_member_api_docs
+// User class with id field not marked as final and with a setter method
 
-///User class
-// ignore: must_be_immutable
 class User {
-  ///User constructor
-  const User({
-    required this.id,
-    required this.username,
+  String? id; // Removed 'final' keyword
+
+  final String email;
+  final int phoneNumber;
+  final String password;
+
+  User({
+    this.id,
+    required this.email,
     required this.phoneNumber,
     required this.password,
   });
 
-  // ignore: public_member_api_docs
   User.fromJson(Map<String, dynamic> json)
-      : id = json['id'] as String,
-        username = json['username'] as String,
+      : id = json['id'] as String?,
+        email = json['email'] as String,
         phoneNumber = json['phoneNumber'] as int,
         password = json['password'] as String;
 
-  // ignore: public_member_api_docs
-  final String id;
-
-  // ignore: public_member_api_docs
-  final String username;
-
-  ///phone number
-  final int phoneNumber;
-
-  ///encrypted password
-  final String password;
-
-  // ignore: public_member_api_docs
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'username': username,
+        'email': email,
         'phoneNumber': phoneNumber,
         'password': password,
       };
 
-  List<Object?> get props => [id, username, phoneNumber, password];
+  List<Object?> get props => [id, email, phoneNumber, password];
 }

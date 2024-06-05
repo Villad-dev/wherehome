@@ -4,29 +4,39 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:wherehome/common/controllers/http_controller.dart';
+import 'package:wherehome/common/widgets/dialog_error.dart';
 import 'package:wherehome/common/widgets/dropdown_countries_list.dart';
+import 'package:wherehome/common/widgets/error_log.dart';
 import 'package:wherehome/common/widgets/localized_textfield.dart';
 import 'package:wherehome/const/countries.dart';
+import 'package:wherehome/data/models/ErrorLog.dart';
 import 'package:wherehome/data/repositories/user_repo.dart';
 
-class LoginView extends StatefulWidget {
-  const LoginView({super.key});
+class RegisterView extends StatefulWidget {
+  const RegisterView({super.key});
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  State<RegisterView> createState() => _RegisterViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _RegisterViewState extends State<RegisterView> {
   late final TextEditingController _phone;
   late final TextEditingController _password;
+  late final TextEditingController _email;
+  late final TextEditingController _confirmPassword;
   late final int _code;
   final api = HttpController();
+  final _errorLog = ErrorLog(
+      errorMessage: '', errorEmptyFields: false, errorPasswords: false);
 
   @override
   void initState() {
     _phone = TextEditingController();
     _password = TextEditingController();
+    _email = TextEditingController();
+    _confirmPassword = TextEditingController();
     _code = countries['Poland']!.dialCode;
+    validateFields();
     super.initState();
   }
 
@@ -34,12 +44,28 @@ class _LoginViewState extends State<LoginView> {
   void dispose() {
     _phone.dispose();
     _password.dispose();
+    _email.dispose();
+    _confirmPassword.dispose();
     super.dispose();
   }
 
-  void _onCountryChanged(int newCountryCode) {
+  void validateFields() {
     setState(() {
-      _code = newCountryCode;
+      _errorLog.errorMessage = '';
+      _errorLog.errorEmptyFields = _phone.text.isEmpty ||
+          _password.text.isEmpty ||
+          _confirmPassword.text.isEmpty ||
+          _email.text.isEmpty;
+
+      print(_errorLog.errorEmptyFields);
+      if (_errorLog.errorEmptyFields) {
+        _errorLog.errorMessage += 'Please fill in all required fields';
+      }
+
+      _errorLog.errorPasswords = _password.text != _confirmPassword.text;
+      if (_errorLog.errorPasswords) {
+        _errorLog.errorMessage += ' Passwords do not match. Try again!';
+      }
     });
   }
 
@@ -55,7 +81,7 @@ class _LoginViewState extends State<LoginView> {
               height: 200,
               width: double.maxFinite,
               child: Image.asset(
-                'assets/images/login_image.png',
+                'assets/images/register_image.png', // Change image if needed
                 fit: BoxFit.fill,
               ),
             ),
@@ -67,7 +93,7 @@ class _LoginViewState extends State<LoginView> {
                     alignment: Alignment.centerLeft,
                     height: 30,
                     child: Text(
-                      'mobile_request_help'.tr(), // Check localization
+                      'register_help'.tr(), // Check localization
                       style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w600,
@@ -79,7 +105,7 @@ class _LoginViewState extends State<LoginView> {
                     alignment: Alignment.centerLeft,
                     height: 100,
                     child: Text(
-                      'verification_code_help'.tr(), // Check localization
+                      'register_description'.tr(), // Check localization
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w300,
@@ -95,7 +121,6 @@ class _LoginViewState extends State<LoginView> {
                         onCodeChanged: (code) {
                           setState(() {
                             _code = code;
-                            print(_code);
                           });
                         },
                       ),
@@ -109,88 +134,78 @@ class _LoginViewState extends State<LoginView> {
                           10,
                           TextInputType.phone,
                           false,
-                          (value) => null,
+                          (value) => validateFields(),
                         ),
                       ),
                     ],
+                  ),
+                  LocalizedTextField(
+                    _email,
+                    'email_request_help_short',
+                    50,
+                    TextInputType.emailAddress,
+                    false,
+                    (value) => validateFields(),
                   ),
                   LocalizedTextField(
                     _password,
                     'password_request_help_short',
                     16,
                     TextInputType.visiblePassword,
-                    true,
-                    (value) => null,
+                    false,
+                    (value) => validateFields(),
                   ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Divider(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onPrimary, // Check color
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
-                        child: Text(
-                          'or'.tr(),
+                  LocalizedTextField(
+                    _confirmPassword,
+                    'confirm_password_request_help_short',
+                    16,
+                    TextInputType.visiblePassword,
+                    false,
+                    (value) => validateFields(),
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: 'login_question'.tr(),
                           style: TextStyle(
-                            fontSize: 16,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onPrimary, // Check color
-                          ),
+                              color: Theme.of(context).colorScheme.onPrimary),
                         ),
-                      ),
-                      Expanded(
-                        child: Divider(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onPrimary, // Check color
+                        TextSpan(
+                          text: 'login_text'.tr(),
+                          style: TextStyle(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primaryContainer),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Navigator.pushNamed(context, '/login');
+                            },
                         ),
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(70, 30, 70, 20),
-                    child: RichText(
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
-                            text: 'register_question'.tr(),
-                            style: TextStyle(
-                                color: Theme.of(context).colorScheme.onPrimary),
-                          ),
-                          TextSpan(
-                            text: 'register_text'.tr(),
-                            style: TextStyle(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .primaryContainer),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                Navigator.pushNamed(
-                                    context, '/register'); // Check navigation
-                              },
-                          ),
-                        ],
-                      ),
+                      ],
                     ),
+                  ),
+                  ErrorLogText(
+                    hasProblems:
+                        _errorLog.errorPasswords || _errorLog.errorEmptyFields,
+                    message: _errorLog.errorMessage,
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                     child: OutlinedButton(
                       onPressed: () async {
                         final user = User(
-                            email: 'hello',
+                            email: _email.text,
                             phoneNumber: int.parse('$_code${_phone.text}'),
                             password: _password.text);
 
                         await api.sendPostRequest(
                             'auth/basic', jsonEncode(user), (success) {
                           user.id = jsonDecode(success.body)['id'];
-                        }, (fail) {});
+                          Navigator.of(context).pop();
+                        }, (fail) {
+                          showErrorDialog(context, fail.body);
+                        });
                       },
                       style: ButtonStyle(
                         minimumSize: MaterialStateProperty.all(
@@ -199,7 +214,7 @@ class _LoginViewState extends State<LoginView> {
                             const Size(double.maxFinite, 150)),
                       ),
                       child: Text(
-                        "Where's Home",
+                        'register_button_text'.tr(),
                         style: TextStyle(
                           fontSize: 22,
                           color: Theme.of(context)
@@ -212,7 +227,6 @@ class _LoginViewState extends State<LoginView> {
                 ],
               ),
             ),
-            SizedBox(height: MediaQuery.of(context).viewInsets.bottom),
           ],
         ),
       ),
