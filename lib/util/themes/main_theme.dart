@@ -13,7 +13,7 @@ final ThemeData lightColorTheme = ThemeData(
     onSecondary: Color.fromARGB(244, 223, 132, 56),
     error: Color.fromARGB(244, 255, 0, 78),
     onError: Color.fromARGB(244, 255, 255, 255),
-    surface: Color.fromARGB(244, 171, 199, 230),
+    surface: Color.fromARGB(244, 99, 174, 255),
     onSurface: Color.fromARGB(244, 31, 32, 31),
     tertiaryContainer: Color.fromARGB(255, 190, 231, 255),
     onTertiaryContainer: Color.fromARGB(244, 8, 13, 47),

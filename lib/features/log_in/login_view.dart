@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +5,6 @@ import 'package:wherehome/common/controllers/http_controller.dart';
 import 'package:wherehome/common/widgets/dropdown_countries_list.dart';
 import 'package:wherehome/common/widgets/localized_textfield.dart';
 import 'package:wherehome/const/countries.dart';
-import 'package:wherehome/data/repositories/user_repo.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -19,7 +16,7 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   late final TextEditingController _phone;
   late final TextEditingController _password;
-  late final int _code;
+  late int _code;
   final api = HttpController();
 
   @override
@@ -35,12 +32,6 @@ class _LoginViewState extends State<LoginView> {
     _phone.dispose();
     _password.dispose();
     super.dispose();
-  }
-
-  void _onCountryChanged(int newCountryCode) {
-    setState(() {
-      _code = newCountryCode;
-    });
   }
 
   @override
@@ -95,7 +86,6 @@ class _LoginViewState extends State<LoginView> {
                         onCodeChanged: (code) {
                           setState(() {
                             _code = code;
-                            print(_code);
                           });
                         },
                       ),
@@ -153,7 +143,7 @@ class _LoginViewState extends State<LoginView> {
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(70, 30, 70, 20),
+                    padding: const EdgeInsets.fromLTRB(0, 30, 0, 20),
                     child: RichText(
                       text: TextSpan(
                         children: [
@@ -182,15 +172,16 @@ class _LoginViewState extends State<LoginView> {
                     padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                     child: OutlinedButton(
                       onPressed: () async {
-                        final user = User(
-                            email: 'hello',
-                            phoneNumber: int.parse('$_code${_phone.text}'),
-                            password: _password.text);
-
-                        await api.sendPostRequest(
-                            'auth/basic', jsonEncode(user), (success) {
-                          user.id = jsonDecode(success.body)['id'];
-                        }, (fail) {});
+                        // final user = User(
+                        //     email: 'hello',
+                        //     phoneNumber: '$_code${_phone.text}',
+                        //     password: _password.text);
+                        //
+                        // await api.sendPostRequest(
+                        //     'auth/basic', jsonEncode(user), (success) {
+                        //   user.id = jsonDecode(success.body)['id'];
+                        // }, (fail) {});
+                        Navigator.pushNamed(context, '/home');
                       },
                       style: ButtonStyle(
                         minimumSize: MaterialStateProperty.all(

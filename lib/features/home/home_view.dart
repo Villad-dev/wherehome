@@ -8,10 +8,30 @@ import 'package:wherehome/features/profile/profile_view.dart';
 
 import '../../data/models/filter.dart';
 import '../../data/models/home.dart';
-import 'widgets/homeitem_view.dart';
+import '../home_details/homedetails_view.dart';
+import 'widgets/toggle_buttons.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({super.key, required String title});
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  bool isGrid = true;
+
+  void toggleToGrid() {
+    setState(() {
+      isGrid = true;
+    });
+  }
+
+  void toggleToList() {
+    setState(() {
+      isGrid = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,14 +47,26 @@ class HomeView extends StatelessWidget {
           ),
         ],
       ),
-      body: const Column(
+      body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SearchWidget(),
-          SizedBox(height: 8),
-          FiltersWidget(),
+          const SearchWidget(),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ToggleButtonsExample(
+                  isGrid: isGrid,
+                  onToggleGrid: toggleToGrid,
+                  onToggleList: toggleToList,
+                ),
+                const FiltersWidget(),
+              ],
+            ),
+          ),
           Expanded(
-            child: HomesGrid(),
+            child: HomesGrid(isGrid: isGrid),
           ),
         ],
       ),
@@ -94,7 +126,9 @@ class HomeView extends StatelessWidget {
 }
 
 class HomesGrid extends StatelessWidget {
-  const HomesGrid({super.key});
+  final bool isGrid;
+
+  const HomesGrid({super.key, required this.isGrid});
 
   static List<Home> homes = [
     Home('ul. Piotrokowska', '2', 'Warsaw', 4000.0, 45.0, 2,
@@ -103,22 +137,41 @@ class HomesGrid extends StatelessWidget {
         'ul. Bohaterska', '5', 'Warsaw', 2450, 45, 2, "assets/images/img2.jpg"),
     Home('ul. Kaminskiego', '40', 'Poznan', 4650, 45, 2,
         "assets/images/img1.jpg"),
-    // Add more homes as needed
   ];
 
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-      padding: const EdgeInsets.all(10.0),
-      crossAxisCount: 2,
-      crossAxisSpacing: 10.0,
-      mainAxisSpacing: 10.0,
-      children: homes.map((home) {
-        return HomeWidget(
-          homeDataSet: home,
-        );
-      }).toList(),
-    );
+    return isGrid
+        ? GridView.builder(
+            padding: const EdgeInsets.all(10.0),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 10.0,
+              mainAxisSpacing: 10.0,
+              childAspectRatio: 0.75, // Adjust this to change the item size
+            ),
+            itemCount: HomesGrid.homes.length,
+            itemBuilder: (BuildContext context, int index) {
+              return HomeWidget(
+                homeDataSet: HomesGrid.homes[index],
+                elementHeight: 250,
+                imageHeight: 100,
+              );
+            },
+          )
+        : ListView(
+            padding: const EdgeInsets.all(10.0),
+            children: HomesGrid.homes.map((home) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 10.0),
+                child: HomeWidget(
+                  homeDataSet: home,
+                  elementHeight: 350,
+                  imageHeight: 200,
+                ),
+              );
+            }).toList(),
+          );
   }
 }
 
@@ -178,6 +231,7 @@ class FiltersWidget extends StatefulWidget {
 }
 
 class _FiltersWidgetState extends State<FiltersWidget> {
+  Filter? selectedFilter;
   List<DropdownMenuEntry<Filter>> filters = [
     DropdownMenuEntry(value: Filter('promotion ASC'), label: 'asc_price'.tr()),
     DropdownMenuEntry(
@@ -190,50 +244,71 @@ class _FiltersWidgetState extends State<FiltersWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: const Text('Sorting').tr(),
-          ),
-          DropdownMenu(
-              width: 200.0,
-              //label: const Text('label'),
-              hintText: 'sorting_type'.tr(),
-              enableFilter: true,
-              dropdownMenuEntries: filters)
-        ],
+    final colorScheme = Theme.of(context).colorScheme;
+    return DropdownButton<Filter>(
+      value: selectedFilter,
+      hint: Text(
+        'sorting_type'.tr(),
+        style: const TextStyle(color: Colors.black),
       ),
+      icon: Icon(
+        Icons.arrow_downward,
+        color: colorScheme.tertiary,
+      ),
+      iconSize: 24,
+      elevation: 16,
+      style: const TextStyle(color: Colors.black),
+      underline: Container(
+        height: 2,
+        color: colorScheme.surface,
+      ),
+      onChanged: (Filter? newValue) {
+        setState(() {
+          selectedFilter = newValue!;
+        });
+      },
+      items: filters.map((DropdownMenuEntry entry) {
+        return DropdownMenuItem<Filter>(
+          value: entry.value,
+          child: Text(entry.label, style: const TextStyle(color: Colors.black)),
+        );
+      }).toList(),
     );
   }
 }
 
 class HomeWidget extends StatelessWidget {
   final Home homeDataSet;
+  final int elementHeight;
+  final int imageHeight;
 
   const HomeWidget({
     super.key,
     required this.homeDataSet,
+    required this.elementHeight,
+    required this.imageHeight,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const HomeItemView()));
-      }, // Execute the callback function when tapped
-
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => HomeItemView(
+                homeDetails: homeDataSet,
+              ),
+            ));
+      },
       child: Container(
+        height: elementHeight.toDouble(),
         alignment: Alignment.topCenter,
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.tertiaryContainer,
           shape: BoxShape.rectangle,
           borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-          /* border: Border.all(
+          border: Border.all(
             width: 1.0,
             color: Colors.white30,
             style: BorderStyle.solid,
@@ -245,13 +320,14 @@ class HomeWidget extends StatelessWidget {
               blurRadius: 5, // Blur radius
               offset: const Offset(0, 3), // Shadow position
             ),
-          ],*/
+          ],
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Align(
-              alignment: Alignment.topCenter,
+            SizedBox(
+              width: double.maxFinite,
+              height: imageHeight.toDouble(),
               child: ClipRRect(
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(10.0),
@@ -259,20 +335,101 @@ class HomeWidget extends StatelessWidget {
                 ),
                 child: Image.asset(
                   homeDataSet.imagePath,
+                  fit: BoxFit.fill,
                 ),
               ),
             ),
-            Text(
-              "${homeDataSet.address} ${homeDataSet.addressNum}",
-              textAlign: TextAlign.center, // Align text to center
-            ),
-            Text(
-              "${homeDataSet.price}  zl",
-              textAlign: TextAlign.center, // Align text to center
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Property name",
+                        textAlign: TextAlign.center, // Align text to center
+                      ),
+                    ],
+                  ),
+                  Text(
+                    '${homeDataSet.price} ${tr('currency')}',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w600,
+                    ), // Align text to center
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const Icon(Icons.location_on_outlined),
+                      Text(
+                        "${homeDataSet.address} ${homeDataSet.addressNum}",
+                        textAlign: TextAlign.center, // Align text to center
+                      ),
+                    ],
+                  ),
+                  const Divider(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const HomeProperty(
+                        icon: Icons.bed_rounded,
+                        measure: Text('5 '),
+                      ),
+                      const HomeProperty(
+                        icon: Icons.bathtub_outlined,
+                        measure: Text('2 '),
+                      ),
+                      const HomeProperty(
+                        icon: Icons.kitchen_rounded,
+                        measure: Text('2 '),
+                      ),
+                      HomeProperty(
+                          icon: Icons.grid_3x3_rounded,
+                          measure: RichText(
+                            text: TextSpan(children: [
+                              const TextSpan(
+                                  text: '45',
+                                  style: TextStyle(color: Colors.black87)),
+                              const TextSpan(
+                                  text: 'm',
+                                  style: TextStyle(color: Colors.black87)),
+                              WidgetSpan(
+                                child: Transform.translate(
+                                  offset: const Offset(1, -5),
+                                  child: const Text(
+                                    '2',
+                                    textScaler: TextScaler.linear(0.7),
+                                  ),
+                                ),
+                              ),
+                            ]),
+                          )),
+                    ],
+                  )
+                ],
+              ),
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class HomeProperty extends StatelessWidget {
+  const HomeProperty({super.key, required this.icon, required this.measure});
+
+  final Widget measure;
+  final IconData icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [Icon(icon), measure],
     );
   }
 }

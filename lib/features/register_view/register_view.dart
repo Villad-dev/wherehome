@@ -24,7 +24,7 @@ class _RegisterViewState extends State<RegisterView> {
   late final TextEditingController _password;
   late final TextEditingController _email;
   late final TextEditingController _confirmPassword;
-  late final int _code;
+  late int _code;
   final api = HttpController();
   final _errorLog = ErrorLog(
       errorMessage: '', errorEmptyFields: false, errorPasswords: false);
@@ -59,12 +59,12 @@ class _RegisterViewState extends State<RegisterView> {
 
       print(_errorLog.errorEmptyFields);
       if (_errorLog.errorEmptyFields) {
-        _errorLog.errorMessage += 'Please fill in all required fields';
+        _errorLog.errorMessage += 'registration_error_1'.tr();
       }
 
       _errorLog.errorPasswords = _password.text != _confirmPassword.text;
       if (_errorLog.errorPasswords) {
-        _errorLog.errorMessage += ' Passwords do not match. Try again!';
+        _errorLog.errorMessage += 'registration_error_2'.tr();
       }
     });
   }
@@ -199,7 +199,7 @@ class _RegisterViewState extends State<RegisterView> {
                       onPressed: () async {
                         final user = User(
                             email: _email.text,
-                            phoneNumber: int.parse('$_code${_phone.text}'),
+                            phoneNumber: '$_code${_phone.text}',
                             password: _password.text);
 
                         await api.sendPostRequest(

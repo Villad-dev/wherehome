@@ -4,7 +4,7 @@ class User {
   String? id; // Removed 'final' keyword
 
   final String email;
-  final int phoneNumber;
+  final String phoneNumber;
   final String password;
 
   User({
@@ -17,7 +17,7 @@ class User {
   User.fromJson(Map<String, dynamic> json)
       : id = json['id'] as String?,
         email = json['email'] as String,
-        phoneNumber = json['phoneNumber'] as int,
+        phoneNumber = json['phoneNumber'] as String,
         password = json['password'] as String;
 
   Map<String, dynamic> toJson() => {
