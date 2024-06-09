@@ -35,12 +35,7 @@ class WhereHome extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: lightColorTheme,
-      home: const Scaffold(
-        body: Center(
-          child: Text('Example'),
-        ),
-      ),
-      //const HomeView(title: 'Tittle'),
+      home: const HomeView(title: 'Tittle'),
       routes: {
         '/login': (context) => const LoginView(),
         '/register': (context) => const RegisterView(),
