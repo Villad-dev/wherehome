@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:wherehome/const/languages.dart';
 
@@ -17,8 +18,7 @@ class LanguageSelectionDialog extends StatelessWidget {
       elevation: 16,
       child: Container(
         constraints: BoxConstraints(
-          maxHeight:
-              MediaQuery.of(context).size.height * 0.5, // 50% of screen height
+          maxHeight: MediaQuery.of(context).size.height * 0.5,
         ),
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -27,7 +27,7 @@ class LanguageSelectionDialog extends StatelessWidget {
             const Text(
               'Select Language',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
+            ).tr(),
             const SizedBox(height: 16.0),
             Flexible(
               child: ListView.builder(
@@ -35,9 +35,8 @@ class LanguageSelectionDialog extends StatelessWidget {
                 itemCount: languages.length,
                 itemBuilder: (context, index) {
                   final locale = languages[index].keys.first;
-                  //languages[index].values.first;
                   return ListTile(
-                    title: Text(locale.toString()),
+                    title: Text(locale.toString()).tr(),
                     onTap: () {
                       onLocaleSelected(languages[index].values.first);
                       Navigator.of(context).pop();

@@ -5,7 +5,7 @@ class TimePicker extends StatefulWidget {
     super.key,
     required this.from,
     required this.to,
-    required this.interval,
+    required this.interval, // in minutes (e.g., 30 for a 30-minute interval)
   });
 
   final DateTime from;
@@ -21,7 +21,12 @@ class _TimePickerState extends State<TimePicker> {
 
   List<DateTime> _generateHours() {
     List<DateTime> hours = [];
-    DateTime currentHour = DateTime(widget.from.hour);
+    DateTime currentHour = DateTime(
+      widget.from.year,
+      widget.from.month,
+      widget.from.day,
+      widget.from.hour,
+    );
     while (currentHour.isBefore(widget.to)) {
       hours.add(currentHour);
       currentHour = currentHour.add(Duration(minutes: widget.interval));
@@ -42,35 +47,107 @@ class _TimePickerState extends State<TimePicker> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.secondary,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: SingleChildScrollView(
-        child: Wrap(
-          spacing: 10,
-          runSpacing: 10,
-          children: _generateHours().map((hour) {
-            return GestureDetector(
-              onTap: () => _onTimeSelected(hour),
-              child: Card(
-                elevation: 3,
-                color: isSameTime(hour) ? Colors.blueAccent : null,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    '${hour.hour}:${hour.minute.toString().padLeft(2, '0')}',
-                    style: const TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            const Text(
+              'Available hours',
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 18,
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Wrap(
+              spacing: 10,
+              runSpacing: 10,
+              children: _generateHours().map((hour) {
+                return GestureDetector(
+                  onTap: () {
+                    _onTimeSelected(hour);
+                    Navigator.of(context).pop(hour);
+                  },
+                  child: Card(
+                    elevation: 3,
+                    color: isSameTime(hour) ? Colors.blueAccent : null,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        '${hour.hour}:${hour.minute.toString().padLeft(2, '0')}',
+                        style: const TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ),
-            );
-          }).toList(),
+                );
+              }).toList(),
+            ),
+          ],
         ),
+      ),
+    );
+  }
+}
+
+class TimePickerField extends StatefulWidget {
+  const TimePickerField({
+    super.key,
+    required this.from,
+    required this.to,
+    required this.interval,
+  });
+
+  final DateTime from;
+  final DateTime to;
+  final int interval;
+
+  @override
+  _TimePickerFieldState createState() => _TimePickerFieldState();
+}
+
+class _TimePickerFieldState extends State<TimePickerField> {
+  TextEditingController _timeController = TextEditingController();
+
+  Future<void> _selectTime(BuildContext context) async {
+    final DateTime picked = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: TimePicker(
+            from: widget.from,
+            to: widget.to,
+            interval: widget.interval,
+          ),
+        );
+      },
+    );
+
+    setState(() {
+      print('Clicked');
+      _timeController.text =
+          '${picked.hour}:${picked.minute.toString().padLeft(2, '0')}';
+      print(_timeController.text);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: TextEditingController(text: _timeController.text),
+      readOnly: true,
+      style: const TextStyle(color: Colors.black),
+      onTap: () async {
+        await _selectTime(context);
+      },
+      decoration: const InputDecoration(
+        labelText: 'Select Time',
+        suffixIcon: Icon(Icons.access_time),
       ),
     );
   }

@@ -22,8 +22,7 @@ class HomeItemView extends StatelessWidget {
                   child: Image.asset(
                     homeDetails.imagePath,
                     fit: BoxFit.fill,
-                    //width: double.infinity,
-                    //height: 200,
+                    width: double.infinity,
                   ),
                 ),
                 Positioned(
@@ -70,22 +69,18 @@ class HomeItemView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            /*   CalendarDatePicker(
+            /*  CalendarDatePicker(
               initialDate: DateTime.now(),
               firstDate: DateTime.now(),
-              lastDate: DateTime.now(),
+              lastDate: DateTime.now().add(const Duration(days: 60)),
               onDateChanged: (day) {},
             ),*/
-            Column(
-              children: [
-                TimePicker(
-                  from: DateTime.now(),
-                  to: DateTime.now().add(
-                    const Duration(hours: 2),
-                  ),
-                  interval: 30,
-                ),
-              ],
+            TimePickerField(
+              from: DateTime.now(),
+              to: DateTime.now().add(
+                const Duration(hours: 5),
+              ),
+              interval: 30,
             ),
           ],
         ),
