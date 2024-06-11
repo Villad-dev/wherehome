@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mapbox_maps_flutter/mapbox_maps_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:wherehome/features/home_insertion/widgets/filter_features.dart';
 import 'package:wherehome/features/home_insertion/widgets/switch_buttons_property_type.dart';
 import 'package:wherehome/features/home_insertion/widgets/switch_buttons_rent_type.dart';
@@ -34,6 +35,12 @@ class _InsertHomeState extends State<InsertHome> {
     super.dispose();
   }
 
+  Future<void> localFilesPermission() async {
+    Permission.mediaLibrary.onGrantedCallback(() {
+      print('Granted');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,10 +60,6 @@ class _InsertHomeState extends State<InsertHome> {
         scrollDirection: Axis.vertical,
         //crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Container(
-            color: Theme.of(context).colorScheme.tertiary,
-            height: 200,
-          ),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -64,6 +67,27 @@ class _InsertHomeState extends State<InsertHome> {
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                GestureDetector(
+                  onTap: () async {
+                    await localFilesPermission();
+                  },
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Container(
+                        height: 200,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.surface,
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                      ),
+                      const Icon(
+                        Icons.add_rounded,
+                        size: 100,
+                      ),
+                    ],
+                  ),
+                ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   //mainAxisAlignment: MainAxisAlignment.spaceBetween,

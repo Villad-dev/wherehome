@@ -50,7 +50,7 @@ class _HomeViewState extends State<HomeView> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const SearchWidget(),
+          SearchWidget(),
           Padding(
             padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
             child: Row(
@@ -196,8 +196,8 @@ class _SearchWidgetState extends State<SearchWidget> {
             },
             leading: const Icon(Icons.search),
             hintText: 'find_home'.tr(),
-            constraints: const BoxConstraints(
-              maxWidth: 400,
+            constraints: BoxConstraints(
+              maxWidth: MediaQuery.of(context).size.width / 2,
               minWidth: 100,
               minHeight: 50,
               maxHeight: 100,
