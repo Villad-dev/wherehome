@@ -1,30 +1,38 @@
-// User class with id field not marked as final and with a setter method
-
 class User {
-  String? id; // Removed 'final' keyword
-
-  final String email;
+  String? id;
+  String? email;
   final String phoneNumber;
-  final String password;
 
   User({
     this.id,
-    required this.email,
+    this.email,
     required this.phoneNumber,
-    required this.password,
   });
 
-  User.fromJson(Map<String, dynamic> json)
-      : id = json['id'] as String?,
-        email = json['email'] as String,
-        phoneNumber = json['phoneNumber'] as String,
-        password = json['password'] as String;
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['id'],
+      email: json['email'],
+      phoneNumber: json['phoneNumber'] ?? '',
+    );
+  }
 
-  Map<String, dynamic> toJson() => {
+  Map<String, String> toJson(String password) => {
+        'phoneNumber': phoneNumber,
+        'password': password,
+      };
+
+  Map<String, String> toHomeOwner() => {
+        'id': id!,
+        'phoneNumber': phoneNumber,
+        'email': email!,
+      };
+
+  Map<String, String> toJsonWithEmail(String email, String password) => {
         'email': email,
         'phoneNumber': phoneNumber,
         'password': password,
       };
 
-  List<Object?> get props => [id, email, phoneNumber, password];
+  List<Object?> get props => [id, email, phoneNumber];
 }

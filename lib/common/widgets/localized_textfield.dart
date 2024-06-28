@@ -3,29 +3,35 @@ import 'package:flutter/material.dart';
 
 class LocalizedTextField extends StatefulWidget {
   const LocalizedTextField(this.textController, this.textHint, this.length,
-      this.inputType, this.isVisible, this.onChanged,
+      this.inputType, this.isPassword, this.onChanged,
       {super.key});
 
   final TextEditingController textController;
   final String textHint;
   final int length;
   final TextInputType inputType;
-  final bool isVisible;
+  final bool isPassword;
   final Function(dynamic value) onChanged;
 
   @override
-  _LocalizedTextFieldState createState() => _LocalizedTextFieldState();
+  LocalizedTextFieldState createState() => LocalizedTextFieldState();
 }
 
-class _LocalizedTextFieldState extends State<LocalizedTextField> {
-  bool _isObscured = false;
+class LocalizedTextFieldState extends State<LocalizedTextField> {
+  late bool _isObscured;
+
+  @override
+  void initState() {
+    super.initState();
+    _isObscured = widget.isPassword;
+  }
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       maxLength: widget.length,
       controller: widget.textController,
-      obscureText: widget.isVisible ? _isObscured : false,
+      obscureText: _isObscured,
       keyboardType: widget.inputType,
       onChanged: widget.onChanged,
       decoration: InputDecoration(
@@ -36,16 +42,26 @@ class _LocalizedTextFieldState extends State<LocalizedTextField> {
           borderRadius: BorderRadius.circular(16.0),
         ),
         hintText: widget.textHint.tr(),
-        suffixIcon: widget.isVisible
-            ? IconButton(
-                icon: Icon(
-                  _isObscured ? Icons.visibility_off : Icons.visibility,
-                ),
-                onPressed: () {
+        suffixIcon: widget.isPassword
+            ? GestureDetector(
+                onLongPressDown: (_) {
                   setState(() {
-                    _isObscured = !_isObscured;
+                    _isObscured = false; // Show the password
                   });
                 },
+                onLongPressCancel: () {
+                  setState(() {
+                    _isObscured = true; // Hide the password
+                  });
+                },
+                onLongPressEnd: (_) {
+                  setState(() {
+                    _isObscured = true; // Hide the password
+                  });
+                },
+                child: Icon(
+                  _isObscured ? Icons.visibility : Icons.visibility_off,
+                ),
               )
             : null,
       ),

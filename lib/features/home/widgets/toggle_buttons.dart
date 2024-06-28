@@ -14,7 +14,7 @@ class ToggleButtonsExample extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mainColor = Theme.of(context).colorScheme.surface;
+    final mainColor = Theme.of(context).colorScheme;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -23,27 +23,27 @@ class ToggleButtonsExample extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: !isGrid ? mainColor : Colors.transparent,
+              color: !isGrid ? mainColor.surface : Colors.transparent,
             ),
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             child: Icon(
               Icons.list,
-              color: !isGrid ? Colors.white : Colors.black,
+              color: !isGrid ? mainColor.onPrimary : mainColor.primary,
             ),
           ),
         ),
-        SizedBox(width: 16), // Add space between the buttons
+        const SizedBox(width: 16), // Add space between the buttons
         GestureDetector(
           onTap: onToggleGrid,
           child: Container(
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: isGrid ? mainColor : Colors.transparent,
+              color: isGrid ? mainColor.surface : Colors.transparent,
             ),
-            padding: EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             child: Icon(
               Icons.grid_on_outlined,
-              color: isGrid ? Colors.white : Colors.black,
+              color: isGrid ? mainColor.onPrimary : mainColor.primary,
             ),
           ),
         ),

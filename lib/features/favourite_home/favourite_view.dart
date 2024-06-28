@@ -1,47 +1,82 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:wherehome/common/controllers/format_controller.dart';
+import 'package:wherehome/common/controllers/http_controller.dart';
+import 'package:wherehome/common/inherited_http_controller.dart';
+import 'package:wherehome/common/providers/user_provider.dart';
+import 'package:wherehome/common/widgets/dialog_error.dart';
+import 'package:wherehome/features/home_details/homedetails_view.dart';
 
-import '../../data/models/home.dart';
+import '../../data/repositories/home_repo.dart';
 
-class FavoriteView extends StatelessWidget {
-  const FavoriteView({super.key});
+class FavoriteView extends StatefulWidget {
+  const FavoriteView({super.key, required this.favoriteHomes});
 
-  static List<Home> favoriteHomes = [
-    Home('ul. Piotrokowska', '2', 'Warsaw', 4000.0, 45.0, 2,
-        "assets/images/img2.jpg"),
-    Home(
-        'ul. Bohaterska', '5', 'Warsaw', 2450, 45, 2, "assets/images/img2.jpg"),
-    Home('ul. Kaminskiego', '40', 'Poznan', 4650, 45, 2,
-        "assets/images/img1.jpg"),
-    // Add more favorite homes as needed
-  ];
+  final List<Home> favoriteHomes;
+
+  @override
+  State<FavoriteView> createState() => _FavoriteViewState();
+}
+
+class _FavoriteViewState extends State<FavoriteView> {
+  Future<void> removeFromFavourites(Home chosen, HttpController api) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    if (userProvider.homeOwner != null) {
+      await api.sendDeleteRequest(
+          'homeowner/${userProvider.homeOwner!.id}',
+          {'Authorization': 'Bearer ${userProvider.apiToken}'},
+          chosen.toJson(), (success) {
+        setState(() {
+          widget.favoriteHomes.remove(chosen);
+        });
+      }, (failure) {
+        showErrorDialog(context, failure.body);
+      });
+    }
+  }
+
+  void loadHomeDetails(Home selectedHome) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => HomeItemView(homeDetails: selectedHome)),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    final api = HttpControllerInherited.of(context).api;
     return Scaffold(
       appBar: AppBar(
         title: const Text('favorites').tr(),
       ),
       body: ListView.builder(
-        itemCount: favoriteHomes.length,
+        itemCount: widget.favoriteHomes.length,
         itemBuilder: (context, index) {
-          final home = favoriteHomes[index];
+          final home = widget.favoriteHomes[index];
           return ListTile(
-            leading: CircleAvatar(
-              radius: 25,
-              backgroundImage: AssetImage(home.imagePath),
+            leading: SizedBox(
+                height: 100,
+                width: 100,
+                child: Image.network(
+                  '${api.baseUrl}/${home.imagePath[0]}',
+                  fit: BoxFit.fill,
+                )),
+            title: Text(
+              home.address,
+              style: const TextStyle(fontSize: 12),
             ),
-            title: Text(home.address),
-            subtitle: Text(home.addressNum),
-            // Add functionality to view details of the favorite home
+            subtitle: Text(
+              '${formatDoublePriceWithSpaces(home.price)} ${tr('currency')} for ${home.type}',
+            ),
             onTap: () {
-              // Implement navigation to view details of the selected home
+              loadHomeDetails(home);
             },
-            // Add functionality to remove the home from favorites
             trailing: IconButton(
-              icon: const Icon(Icons.favorite),
-              onPressed: () {
-                // Implement functionality to remove the home from favorites
+              icon: const Icon(Icons.delete_forever_rounded),
+              onPressed: () async {
+                await removeFromFavourites(home, api);
               },
             ),
           );

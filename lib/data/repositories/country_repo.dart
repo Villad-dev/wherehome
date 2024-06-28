@@ -1,7 +1,7 @@
+class Country {
+  late final String shortName;
+  late final int dialCode;
+  late final String flagPath;
 
-class Country{
-  late String countryName;
-  late String countryShortName;
-  late int countryCode;
-  late String countryImage;
+  Country(this.shortName, this.dialCode, this.flagPath);
 }

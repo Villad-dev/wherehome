@@ -2,40 +2,49 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class SwitchHomeType extends StatefulWidget {
-  const SwitchHomeType({super.key});
+  final Function(String type) onSwitched;
+
+  const SwitchHomeType({super.key, required this.onSwitched});
 
   @override
-  State<SwitchHomeType> createState() => _SwitchHomeTypeState();
+  SwitchHomeTypeState createState() => SwitchHomeTypeState();
 }
 
-class _SwitchHomeTypeState extends State<SwitchHomeType> {
-  late List<bool> homeType = [true, false];
+class SwitchHomeTypeState extends State<SwitchHomeType> {
+  List<bool> homeType = [true, false];
 
   @override
   void initState() {
-    homeType = [true, false];
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ToggleButtons(
-      constraints: BoxConstraints(
-        maxHeight: 55,
-        //maxWidth: double.maxFinite,
-        minHeight: 40,
-        minWidth: (MediaQuery.of(context).size.width - 50) / 2,
+    return Center(
+      child: ToggleButtons(
+        constraints: BoxConstraints(
+          maxHeight: 60,
+          maxWidth: double.maxFinite,
+          minHeight: 45,
+          minWidth: (MediaQuery.of(context).size.width - 40) / 2,
+        ),
+        isSelected: homeType,
+        children: [
+          const Text(
+            'add_rent',
+            style: TextStyle(fontSize: 18),
+          ).tr(),
+          const Text(
+            'add_sell',
+            style: TextStyle(fontSize: 18),
+          ).tr(),
+        ],
+        onPressed: (int index) {
+          setState(() {
+            switchToggle(index);
+          });
+        },
       ),
-      isSelected: homeType,
-      children: [
-        const Text('add_rent').tr(),
-        const Text('add_sell').tr(),
-      ],
-      onPressed: (int index) {
-        setState(() {
-          switchToggle(index);
-        });
-      },
     );
   }
 
@@ -43,8 +52,10 @@ class _SwitchHomeTypeState extends State<SwitchHomeType> {
     for (int buttonIndex = 0; buttonIndex < homeType.length; buttonIndex++) {
       if (buttonIndex == selectedIndex) {
         homeType[buttonIndex] = true;
+        widget.onSwitched('Sell');
       } else {
         homeType[buttonIndex] = false;
+        widget.onSwitched('Rent');
       }
     }
   }

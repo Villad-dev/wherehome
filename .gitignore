@@ -39,3 +39,6 @@ app.*.map.json
 /android/app/release
 /android/gradle.properties
 devtools_options.yaml
+/assets/images/
+/assets/
+/lib/features/phone_validation/

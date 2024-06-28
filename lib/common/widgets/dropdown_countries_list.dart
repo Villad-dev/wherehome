@@ -28,7 +28,8 @@ class _DropDownCountriesListState extends State<DropDownCountriesList> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(width: 0.5),
+        border: Border.all(
+            width: 0.5, color: Theme.of(context).colorScheme.onPrimary),
         borderRadius: BorderRadius.circular(16.0),
       ),
       child: DropdownButtonHideUnderline(

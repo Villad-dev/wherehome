@@ -1,10 +1,17 @@
+import 'dart:convert';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:wherehome/common/controllers/http_controller.dart';
+import 'package:provider/provider.dart';
+import 'package:wherehome/common/inherited_http_controller.dart';
+import 'package:wherehome/common/providers/user_provider.dart';
+import 'package:wherehome/common/widgets/dialog_error.dart';
 import 'package:wherehome/common/widgets/dropdown_countries_list.dart';
 import 'package:wherehome/common/widgets/localized_textfield.dart';
 import 'package:wherehome/const/countries.dart';
+import 'package:wherehome/data/repositories/home_owner_repo.dart';
+import 'package:wherehome/data/repositories/user_repo.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -17,7 +24,6 @@ class _LoginViewState extends State<LoginView> {
   late final TextEditingController _phone;
   late final TextEditingController _password;
   late int _code;
-  final api = HttpController();
 
   @override
   void initState() {
@@ -36,6 +42,7 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
+    final api = HttpControllerInherited.of(context).api;
     return Scaffold(
       resizeToAvoidBottomInset: true, // Ensure keyboard resize behavior
       body: SingleChildScrollView(
@@ -155,9 +162,7 @@ class _LoginViewState extends State<LoginView> {
                           TextSpan(
                             text: 'register_text'.tr(),
                             style: TextStyle(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .primaryContainer),
+                                color: Theme.of(context).colorScheme.onPrimary),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 Navigator.pushNamed(
@@ -172,16 +177,31 @@ class _LoginViewState extends State<LoginView> {
                     padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                     child: OutlinedButton(
                       onPressed: () async {
-                        // final user = User(
-                        //     email: 'hello',
-                        //     phoneNumber: '$_code${_phone.text}',
-                        //     password: _password.text);
-                        //
-                        // await api.sendPostRequest(
-                        //     'auth/basic', jsonEncode(user), (success) {
-                        //   user.id = jsonDecode(success.body)['id'];
-                        // }, (fail) {});
-                        Navigator.pushNamed(context, '/home');
+                        final user = User(phoneNumber: '$_code${_phone.text}');
+
+                        api.sendGetRequest(
+                            'auth/bearer', user.toJson(_password.text),
+                            (success) async {
+                          final response = jsonDecode(success.body);
+                          user.id = response['userId'];
+                          user.email = response['email'];
+                          final token = response['token'];
+                          final userProvider =
+                              Provider.of<UserProvider>(context, listen: false);
+                          userProvider.setUser(user, token);
+
+                          await api.sendGetRequest('homeowner', {
+                            'Authorization': 'Bearer $token',
+                            'userId': user.id!,
+                          }, (onSuccess) {
+                            final jsonResponse = jsonDecode(onSuccess.body);
+                            userProvider
+                                .setHomeOwner(HomeOwner.fromJson(jsonResponse));
+                            Navigator.pushNamed(context, '/home');
+                          }, (onFailure) {});
+                        }, (fail) {
+                          showErrorDialog(context, fail.body);
+                        });
                       },
                       style: ButtonStyle(
                         minimumSize: MaterialStateProperty.all(

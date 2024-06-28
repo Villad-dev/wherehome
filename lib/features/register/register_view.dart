@@ -3,13 +3,16 @@ import 'dart:convert';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:wherehome/common/controllers/http_controller.dart';
+import 'package:provider/provider.dart';
+import 'package:wherehome/common/inherited_http_controller.dart';
+import 'package:wherehome/common/providers/user_provider.dart';
 import 'package:wherehome/common/widgets/dialog_error.dart';
 import 'package:wherehome/common/widgets/dropdown_countries_list.dart';
 import 'package:wherehome/common/widgets/error_log.dart';
 import 'package:wherehome/common/widgets/localized_textfield.dart';
 import 'package:wherehome/const/countries.dart';
-import 'package:wherehome/data/models/ErrorLog.dart';
+import 'package:wherehome/data/models/error_log.dart';
+import 'package:wherehome/data/repositories/home_owner_repo.dart';
 import 'package:wherehome/data/repositories/user_repo.dart';
 
 class RegisterView extends StatefulWidget {
@@ -25,7 +28,6 @@ class _RegisterViewState extends State<RegisterView> {
   late final TextEditingController _email;
   late final TextEditingController _confirmPassword;
   late int _code;
-  final api = HttpController();
   final _errorLog = ErrorLog(
       errorMessage: '', errorEmptyFields: false, errorPasswords: false);
 
@@ -57,7 +59,6 @@ class _RegisterViewState extends State<RegisterView> {
           _confirmPassword.text.isEmpty ||
           _email.text.isEmpty;
 
-      print(_errorLog.errorEmptyFields);
       if (_errorLog.errorEmptyFields) {
         _errorLog.errorMessage += 'registration_error_1'.tr();
       }
@@ -71,6 +72,7 @@ class _RegisterViewState extends State<RegisterView> {
 
   @override
   Widget build(BuildContext context) {
+    final api = HttpControllerInherited.of(context).api;
     return Scaffold(
       resizeToAvoidBottomInset: true, // Ensure keyboard resize behavior
       body: SingleChildScrollView(
@@ -152,7 +154,7 @@ class _RegisterViewState extends State<RegisterView> {
                     'password_request_help_short',
                     16,
                     TextInputType.visiblePassword,
-                    false,
+                    true,
                     (value) => validateFields(),
                   ),
                   LocalizedTextField(
@@ -160,7 +162,7 @@ class _RegisterViewState extends State<RegisterView> {
                     'confirm_password_request_help_short',
                     16,
                     TextInputType.visiblePassword,
-                    false,
+                    true,
                     (value) => validateFields(),
                   ),
                   RichText(
@@ -199,13 +201,25 @@ class _RegisterViewState extends State<RegisterView> {
                       onPressed: () async {
                         final user = User(
                             email: _email.text,
-                            phoneNumber: '$_code${_phone.text}',
-                            password: _password.text);
+                            phoneNumber: '$_code${_phone.text}');
+                        final userProvider =
+                            Provider.of<UserProvider>(context, listen: false);
 
-                        await api.sendPostRequest(
-                            'auth/basic', jsonEncode(user), (success) {
-                          user.id = jsonDecode(success.body)['id'];
-                          Navigator.of(context).pop();
+                        await api.sendPostRequest('auth/bearer', null,
+                            user.toJsonWithEmail(_email.text, _password.text),
+                            (success) async {
+                          final response = jsonDecode(success.body);
+                          //print('body ${success.body}');
+                          user.id = response['id'];
+                          await api.sendPostRequest(
+                              'homeowner', null, user.toHomeOwner(),
+                              (onSuccess) async {
+                            final responseJson = jsonDecode(onSuccess.body);
+                            //print(jsonDecode(onSuccess.body));
+                            final homeOwner = HomeOwner.fromJson(responseJson);
+                            userProvider.setHomeOwner(homeOwner);
+                            Navigator.pushNamed(context, '/login');
+                          }, (onFailure) {});
                         }, (fail) {
                           showErrorDialog(context, fail.body);
                         });

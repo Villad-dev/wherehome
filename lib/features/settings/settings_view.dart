@@ -1,7 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-import 'widgets/languageDialogWidget.dart';
+import 'widgets/language_dialog.dart';
+import 'widgets/theme_toggle.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
@@ -26,12 +27,7 @@ class SettingsView extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
-          ListTile(
-            title: const Text('theme').tr(),
-            subtitle: const Text('theme_description').tr(),
-            leading: const Icon(Icons.palette),
-            onTap: () {},
-          ),
+          const ThemeToggleWidget(),
           const Divider(),
           ListTile(
             title: const Text('notifications').tr(),

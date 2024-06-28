@@ -16,18 +16,26 @@ dependencies:
 
   cupertino_icons: ^1.0.6
   http: ^1.2.1
-  mapbox_maps_flutter: ^1.1.0
+  mapbox_maps_flutter: ^2.0.0
   permission_handler: ^11.3.1
   location: ^6.0.1
   latlong2: ^0.9.1
   provider: ^6.1.2
   easy_localization: ^3.0.7
+  image_picker: ^1.1.2
+  mapbox_search: ^4.2.2
+  auto_size_text: ^3.0.0
+  flutter_staggered_grid_view: ^0.7.0
+  shared_preferences: ^2.2.3
+  package_info_plus: ^8.0.0
+  flutter_local_notifications: ^17.1.2
+  table_calendar: ^3.0.9
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_lints: ^4.0.0
 
-  flutter_lints: ^3.0.0
 flutter:
   uses-material-design: true
   assets:
