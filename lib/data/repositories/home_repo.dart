@@ -19,10 +19,9 @@ class Home {
   late final List<dynamic>? features;
   late final Timetable timetable;
   late final String homeOwner;
-  late final List<dynamic> imagePath;
+  late List<dynamic> imagePath;
 
   Home(
-    //this._id,
     this.title,
     this.type,
     this.rentalFrequency,
@@ -40,7 +39,6 @@ class Home {
     this.features,
     this.timetable,
     this.homeOwner,
-    //this.imagePath,
   );
 
   Home.defined(Map<String, dynamic> json) {
@@ -75,7 +73,6 @@ class Home {
 
   Map<String, dynamic> toJson() {
     return {
-      //'_id': _id,
       'title': title,
       'type': type,
       'rentalFrequency': rentalFrequency,

@@ -23,14 +23,14 @@ import 'widgets/address_search_widget.dart';
 import 'widgets/calendar_picker_insertion.dart';
 import 'widgets/timepicker_insertion.dart';
 
-class InsertHome extends StatefulWidget {
-  const InsertHome({super.key});
+class HomeInsertion extends StatefulWidget {
+  const HomeInsertion({super.key});
 
   @override
-  State<InsertHome> createState() => _InsertHomeState();
+  State<HomeInsertion> createState() => _HomeInsertionState();
 }
 
-class _InsertHomeState extends State<InsertHome> {
+class _HomeInsertionState extends State<HomeInsertion> {
   late final TextEditingController priceInputController;
   late final TextEditingController areaInputController;
   late final TextEditingController titleInputController;
@@ -68,16 +68,16 @@ class _InsertHomeState extends State<InsertHome> {
     if (areaInputController.text.isEmpty) {
       showErrorDialog(context, 'Area is not chosen');
     }
-
-    return prepareHome(
+    final split = sugAdr.placeName!.split(',');
+    final home = Home(
         titleInputController.text,
         type,
         type == 'Sell' ? null : rentalFrequency,
         sugAdr.placeName!,
-        'addressNum',
-        'postalCode',
-        'city',
-        'Country',
+        split.first.split(' ').last,
+        split[1].split(' ').first,
+        split[1].split(' ').last,
+        split.last,
         sugAdr.geometry!.coordinates.lat,
         sugAdr.geometry!.coordinates.long,
         double.tryParse(priceInputController.text)!,
@@ -87,6 +87,8 @@ class _InsertHomeState extends State<InsertHome> {
         features,
         timetable!,
         userProvider.homeOwner!.id!);
+    home.imagePath = [];
+    return home.toJson();
   }
 
   void insertHome(HttpController api) async {
@@ -151,7 +153,6 @@ class _InsertHomeState extends State<InsertHome> {
             if (selectedImages.isEmpty) {
               showErrorDialog(context, 'Choose image');
             } else {
-              //print('Features $features');
               insertHome(api);
             }
           },
@@ -199,8 +200,6 @@ class _InsertHomeState extends State<InsertHome> {
             onSwitched: (String newType) {
               setState(() {
                 type = newType;
-
-                //print(type);
               });
             },
           ),
@@ -356,7 +355,6 @@ class _InsertHomeState extends State<InsertHome> {
                 features: listOfeatures,
                 onSelectionChanged: (selected) {
                   features.addAll(selected);
-                  //print('Selected features: $selected');
                 },
               ),
             ],
@@ -370,7 +368,7 @@ class _InsertHomeState extends State<InsertHome> {
               children: [
                 CalendarPickerInputField(
                   availableFrom: DateTime.now(),
-                  availableTo: DateTime.now().add(const Duration(days: 90)),
+                  availableTo: DateTime.now().add(const Duration(days: 365)),
                   onDateSelected: (DateTimeRange dateRange) {
                     selectedDateRange = dateRange;
                   },
@@ -426,50 +424,6 @@ class _InsertHomeState extends State<InsertHome> {
       showErrorDialog(context, 'All timetable fields must be selected.');
       return null;
     }
-  }
-
-  Map<String, dynamic> prepareHome(
-    //int _id,
-    String title,
-    String type,
-    String? rentalFrequency,
-    String address,
-    String addressNum,
-    String postalCode,
-    String city,
-    String country,
-    double lat,
-    double long,
-    double price,
-    double area,
-    String buildingType,
-    int rooms,
-    List<String> features,
-    Timetable timetable,
-    String homeOwnerId,
-  ) {
-    Home home = Home(
-        //_id,
-        title,
-        type,
-        rentalFrequency,
-        address,
-        addressNum,
-        postalCode,
-        city,
-        country,
-        lat,
-        long,
-        price,
-        area,
-        buildingType,
-        rooms,
-        features,
-        timetable,
-        homeOwnerId);
-    home.imagePath = [];
-
-    return home.toJson();
   }
 
   Future<void> localFilesPermission() async {

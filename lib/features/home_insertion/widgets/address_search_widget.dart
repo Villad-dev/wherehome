@@ -73,13 +73,6 @@ class AddressSearchWidgetState extends State<AddressSearchWidget> {
               );
             },
           ),
-        /*if (!_isSearching &&
-            _suggestions.isEmpty &&
-            _controller.text.isNotEmpty)
-          Container(),
-        */ /*ListTile(
-            title: Text('No suggestions available'),
-          ),*/
       ],
     );
   }

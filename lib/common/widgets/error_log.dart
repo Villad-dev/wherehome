@@ -14,6 +14,6 @@ class ErrorLogText extends StatelessWidget {
             message,
             style: const TextStyle(color: Colors.red),
           )
-        : const SizedBox(); // Empty widget when there are no problems
+        : const SizedBox();
   }
 }

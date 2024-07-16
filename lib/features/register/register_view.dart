@@ -74,7 +74,7 @@ class _RegisterViewState extends State<RegisterView> {
   Widget build(BuildContext context) {
     final api = HttpControllerInherited.of(context).api;
     return Scaffold(
-      resizeToAvoidBottomInset: true, // Ensure keyboard resize behavior
+      resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -83,7 +83,7 @@ class _RegisterViewState extends State<RegisterView> {
               height: 200,
               width: double.maxFinite,
               child: Image.asset(
-                'assets/images/register_image.png', // Change image if needed
+                'assets/images/register_image.png',
                 fit: BoxFit.fill,
               ),
             ),
@@ -95,7 +95,7 @@ class _RegisterViewState extends State<RegisterView> {
                     alignment: Alignment.centerLeft,
                     height: 30,
                     child: Text(
-                      'register_help'.tr(), // Check localization
+                      'register_help'.tr(),
                       style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w600,
@@ -107,7 +107,7 @@ class _RegisterViewState extends State<RegisterView> {
                     alignment: Alignment.centerLeft,
                     height: 100,
                     child: Text(
-                      'register_description'.tr(), // Check localization
+                      'register_description'.tr(),
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w300,
@@ -131,6 +131,7 @@ class _RegisterViewState extends State<RegisterView> {
                       ),
                       Expanded(
                         child: LocalizedTextField(
+                          key: const Key('Registration phone'),
                           _phone,
                           'mobile_request_help_short',
                           10,
@@ -142,6 +143,7 @@ class _RegisterViewState extends State<RegisterView> {
                     ],
                   ),
                   LocalizedTextField(
+                    key: const Key('Registration email'),
                     _email,
                     'email_request_help_short',
                     50,
@@ -150,6 +152,7 @@ class _RegisterViewState extends State<RegisterView> {
                     (value) => validateFields(),
                   ),
                   LocalizedTextField(
+                    key: const Key('Registration password'),
                     _password,
                     'password_request_help_short',
                     16,
@@ -158,6 +161,7 @@ class _RegisterViewState extends State<RegisterView> {
                     (value) => validateFields(),
                   ),
                   LocalizedTextField(
+                    key: const Key('Registration confirm password'),
                     _confirmPassword,
                     'confirm_password_request_help_short',
                     16,
@@ -198,6 +202,7 @@ class _RegisterViewState extends State<RegisterView> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                     child: OutlinedButton(
+                      key: const Key('Register button'),
                       onPressed: () async {
                         final user = User(
                             email: _email.text,
@@ -209,13 +214,11 @@ class _RegisterViewState extends State<RegisterView> {
                             user.toJsonWithEmail(_email.text, _password.text),
                             (success) async {
                           final response = jsonDecode(success.body);
-                          //print('body ${success.body}');
                           user.id = response['id'];
                           await api.sendPostRequest(
                               'homeowner', null, user.toHomeOwner(),
                               (onSuccess) async {
                             final responseJson = jsonDecode(onSuccess.body);
-                            //print(jsonDecode(onSuccess.body));
                             final homeOwner = HomeOwner.fromJson(responseJson);
                             userProvider.setHomeOwner(homeOwner);
                             Navigator.pushNamed(context, '/login');
@@ -234,9 +237,7 @@ class _RegisterViewState extends State<RegisterView> {
                         'register_button_text'.tr(),
                         style: TextStyle(
                           fontSize: 22,
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onPrimary, // Check color
+                          color: Theme.of(context).colorScheme.onPrimary,
                         ),
                       ),
                     ),

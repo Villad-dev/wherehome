@@ -8,7 +8,6 @@ import 'package:wherehome/common/inherited_http_controller.dart';
 import 'package:wherehome/common/providers/theme_provider.dart';
 import 'package:wherehome/features/home_insertion/inserthome_view.dart';
 import 'package:wherehome/features/log_in/login_view.dart';
-import 'package:wherehome/features/notifications/notifications_view.dart';
 import 'package:wherehome/util/themes/main_theme.dart';
 
 import 'common/providers/user_provider.dart';
@@ -60,9 +59,8 @@ class WhereHome extends StatelessWidget {
           '/login': (context) => const LoginView(),
           '/register': (context) => const RegisterView(),
           '/home': (context) => const HomeView(),
-          '/home/insert_new_home': (context) => const InsertHome(),
+          '/home/insert_new_home': (context) => const HomeInsertion(),
           '/profile': (context) => const EmptyProfile(),
-          '/notifications': (context) => const NotificationView(),
         },
         localizationsDelegates: context.localizationDelegates,
         supportedLocales: context.supportedLocales,

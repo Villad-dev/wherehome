@@ -102,7 +102,7 @@ class _HomeItemViewState extends State<HomeItemView> {
                 Text(
                   widget.homeDetails.title,
                   style: TextStyle(
-                    color: Theme.of(context).colorScheme.onPrimary,
+                    color: Theme.of(context).colorScheme.onBackground,
                     fontSize: 22,
                     fontWeight: FontWeight.w600,
                   ),
@@ -134,7 +134,7 @@ class _HomeItemViewState extends State<HomeItemView> {
               maxLines: 4,
               'Address: ${widget.homeDetails.address}',
               style: TextStyle(
-                color: Theme.of(context).colorScheme.onPrimary,
+                color: Theme.of(context).colorScheme.onBackground,
                 fontWeight: FontWeight.w400,
               ),
             ),
@@ -229,7 +229,7 @@ class _HomeItemViewState extends State<HomeItemView> {
       ),
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
-        height: 230,
+        height: 250,
         elevation: 0.0,
         child: Column(
           children: [
@@ -241,13 +241,13 @@ class _HomeItemViewState extends State<HomeItemView> {
                     Text(
                       'Price',
                       style: TextStyle(
-                          fontSize: 12,
+                          fontSize: 16,
                           color: Theme.of(context).colorScheme.onSecondary),
                     ),
                     Text(
-                      '${formatDoublePriceWithSpaces(widget.homeDetails.price)} ${tr('currency')}',
+                      '${formatDoublePriceWithSpaces(widget.homeDetails.price)} ${tr('currency')} ${widget.homeDetails.rentalFrequency ?? ''}',
                       style: TextStyle(
-                        color: Theme.of(context).colorScheme.onPrimary,
+                        color: Theme.of(context).colorScheme.onBackground,
                         fontSize: 25,
                         fontWeight: FontWeight.w600,
                       ),
@@ -264,7 +264,7 @@ class _HomeItemViewState extends State<HomeItemView> {
               children: [
                 Flexible(
                   child: CalendarPickerField(
-                    from: widget.homeDetails.timetable.startDayTime,
+                    from: DateTime.now(),
                     to: widget.homeDetails.timetable.endDayTime,
                     interval: 1,
                     onDateSelected: (DateTime date) {

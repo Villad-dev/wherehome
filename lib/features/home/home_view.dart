@@ -3,6 +3,7 @@ import 'dart:core';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:wherehome/common/controllers/http_controller.dart';
 import 'package:wherehome/common/inherited_http_controller.dart';
 import 'package:wherehome/common/providers/user_provider.dart';
 import 'package:wherehome/common/widgets/dialog_error.dart';
@@ -23,10 +24,10 @@ class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
   @override
-  State<HomeView> createState() => _HomeViewState();
+  State<HomeView> createState() => HomeViewState();
 }
 
-class _HomeViewState extends State<HomeView> {
+class HomeViewState extends State<HomeView> {
   bool isGrid = true;
   List<Home> homes = [];
 
@@ -49,7 +50,7 @@ class _HomeViewState extends State<HomeView> {
   }
 
   void fetchHomes(String? query) {
-    final api = HttpControllerInherited.of(context).api;
+    final api = HttpController(); //HttpControllerInherited.of(context).api;
     api.sendGetRequest(query != null ? 'homes?$query' : 'homes', null,
         (onSuccess) {
       final jsonResponse = jsonDecode(onSuccess.body) as List<dynamic>;
@@ -74,16 +75,6 @@ class _HomeViewState extends State<HomeView> {
             fontWeight: FontWeight.w500,
           ),
         ),
-        actions: [
-          user.user != null
-              ? IconButton(
-                  icon: const Icon(Icons.notifications_rounded),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/notifications');
-                  },
-                )
-              : const SizedBox()
-        ],
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -186,10 +177,8 @@ void loadWidgetAuthorized(
   if (userProvider.homeOwner != null) {
     api.sendGetRequest('homeowner/${userProvider.homeOwner!.id}',
         {'Authorization': 'Bearer ${userProvider.apiToken}'}, (success) {
-      //print(success.body);
       final json = jsonDecode(success.body);
       HomeOwner? homeOwner = HomeOwner.fromJson(json);
-      //print(homeOwner.favourite!);
       userProvider.setHomeOwner(homeOwner);
 
       Navigator.push(
@@ -236,7 +225,7 @@ class HomesGrid extends StatelessWidget {
               mainAxisExtent: gridItemHeight,
               crossAxisSpacing: 10.0,
               mainAxisSpacing: 10.0,
-              childAspectRatio: 0.62, // Adjust this to change the item size
+              childAspectRatio: 0.62,
             ),
             itemCount: homes.length,
             itemBuilder: (BuildContext context, int index) {

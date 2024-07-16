@@ -21,7 +21,6 @@ class UserProvider extends ChangeNotifier {
     _user = user;
     _uniqueId = user.id;
     _apiToken = apiToken;
-    //_saveUserId();
     notifyListeners();
   }
 

@@ -1,6 +1,7 @@
 # wherehome
 
-A new Flutter project.
+A real estate mobile application(currently only Android). Comfy market place application.
+Future will be adopted to Web version.
 
 ## Getting Started
 

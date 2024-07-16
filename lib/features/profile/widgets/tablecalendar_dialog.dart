@@ -63,6 +63,14 @@ class TableCalendarDialogState extends State<TableCalendarDialog> {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          if (eventList.isNotEmpty) ...[
+            for (var event in eventList)
+              Text(
+                event,
+                style: const TextStyle(fontWeight: FontWeight.w600),
+              ),
+          ] else
+            const Text('No events for the selected date.'),
           SizedBox(
             height: 420,
             width: double.maxFinite,
@@ -92,15 +100,6 @@ class TableCalendarDialogState extends State<TableCalendarDialog> {
               ),
             ),
           ),
-          const SizedBox(height: 16),
-          if (eventList.isNotEmpty) ...[
-            const Text('Events:'),
-            for (var event in eventList)
-              ListTile(
-                title: Text(event),
-              ),
-          ] else
-            const Text('No events for the selected date.'),
         ],
       ),
     );

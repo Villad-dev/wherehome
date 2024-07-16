@@ -25,6 +25,11 @@ class Appointment {
     );
   }
 
+  static List<Appointment> parseAppointments(List<dynamic> list) {
+    return List<Appointment>.from(
+        list.map((item) => Appointment.fromJson(item)));
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'home': home.toJson(),

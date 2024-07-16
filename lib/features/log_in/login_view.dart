@@ -44,7 +44,7 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     final api = HttpControllerInherited.of(context).api;
     return Scaffold(
-      resizeToAvoidBottomInset: true, // Ensure keyboard resize behavior
+      resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -65,7 +65,7 @@ class _LoginViewState extends State<LoginView> {
                     alignment: Alignment.centerLeft,
                     height: 30,
                     child: Text(
-                      'mobile_request_help'.tr(), // Check localization
+                      'mobile_request_help'.tr(),
                       style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w600,
@@ -77,7 +77,7 @@ class _LoginViewState extends State<LoginView> {
                     alignment: Alignment.centerLeft,
                     height: 100,
                     child: Text(
-                      'verification_code_help'.tr(), // Check localization
+                      'verification_code_help'.tr(),
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w300,
@@ -101,6 +101,7 @@ class _LoginViewState extends State<LoginView> {
                       ),
                       Expanded(
                         child: LocalizedTextField(
+                          key: const Key('phoneTextField'),
                           _phone,
                           'mobile_request_help_short',
                           10,
@@ -112,6 +113,7 @@ class _LoginViewState extends State<LoginView> {
                     ],
                   ),
                   LocalizedTextField(
+                    key: const Key('passwordTextField'),
                     _password,
                     'password_request_help_short',
                     16,
@@ -123,28 +125,22 @@ class _LoginViewState extends State<LoginView> {
                     children: [
                       Expanded(
                         child: Divider(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onPrimary, // Check color
+                          color: Theme.of(context).colorScheme.onPrimary,
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
                         child: Text(
-                          'or'.tr(),
+                          'or',
                           style: TextStyle(
                             fontSize: 16,
-                            color: Theme.of(context)
-                                .colorScheme
-                                .onPrimary, // Check color
+                            color: Theme.of(context).colorScheme.onPrimary,
                           ),
-                        ),
+                        ).tr(),
                       ),
                       Expanded(
                         child: Divider(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onPrimary, // Check color
+                          color: Theme.of(context).colorScheme.onPrimary,
                         ),
                       ),
                     ],
@@ -162,11 +158,11 @@ class _LoginViewState extends State<LoginView> {
                           TextSpan(
                             text: 'register_text'.tr(),
                             style: TextStyle(
-                                color: Theme.of(context).colorScheme.onPrimary),
+                                color:
+                                    Theme.of(context).colorScheme.onSecondary),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                Navigator.pushNamed(
-                                    context, '/register'); // Check navigation
+                                Navigator.pushNamed(context, '/register');
                               },
                           ),
                         ],
@@ -176,7 +172,8 @@ class _LoginViewState extends State<LoginView> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                     child: OutlinedButton(
-                      onPressed: () async {
+                      key: const Key('Where Home login'),
+                      onPressed: () {
                         final user = User(phoneNumber: '$_code${_phone.text}');
 
                         api.sendGetRequest(
@@ -213,9 +210,7 @@ class _LoginViewState extends State<LoginView> {
                         "Where's Home",
                         style: TextStyle(
                           fontSize: 22,
-                          color: Theme.of(context)
-                              .colorScheme
-                              .onPrimary, // Check color
+                          color: Theme.of(context).colorScheme.onPrimary,
                         ),
                       ),
                     ),

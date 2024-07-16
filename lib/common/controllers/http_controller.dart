@@ -23,8 +23,6 @@ class HttpController {
         onFail(response);
       }
     } catch (e) {
-      //  print('Error occurred: $e');
-      onFail(http.Response('Something went wrong', 404));
       throw Exception('Failed to send GET request');
     }
   }
@@ -37,23 +35,15 @@ class HttpController {
     void Function(http.Response) onFail,
   ) async {
     final url = Uri.parse('$baseUrl/$path');
-
-    //print(url);
-    //print(json.encode(jsonBody));
-
     try {
       final response = await http.post(
         url,
         headers: headers,
         body: json.encode(jsonBody),
       );
-
-      //print(response.body);
-
       if (response.statusCode == 200) {
         onSuccess(response);
       } else {
-        //print('Failed to send POST request: ${response.statusCode}');
         onFail(response);
       }
     } catch (e) {

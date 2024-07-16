@@ -35,6 +35,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
+  integration_test:
+    sdk: flutter
 
 flutter:
   uses-material-design: true
@@ -76,4 +78,23 @@ flutter:
           weight: 600
         - asset: assets/fonts/KodeMono/KodeMono-Bold.ttf
           weight: 700
+    - family: JetBrains Mono
+      fonts:
+        - asset: assets/fonts/JetBrains Mono/JetBrainsMono-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/JetBrains Mono/JetBrainsMono-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/JetBrains Mono/JetBrainsMono-Light.ttf
+          weight: 300
+        - asset: assets/fonts/JetBrains Mono/JetBrainsMono-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/JetBrains Mono/JetBrainsMono-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/JetBrains Mono/JetBrainsMono-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/JetBrains Mono/JetBrainsMono-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/JetBrains Mono/JetBrainsMono-ExtraBold.ttf
+          weight: 800
+
 

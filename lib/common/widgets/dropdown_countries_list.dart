@@ -26,10 +26,10 @@ class _DropDownCountriesListState extends State<DropDownCountriesList> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(
-            width: 0.5, color: Theme.of(context).colorScheme.onPrimary),
+        border: Border.all(width: 1, color: colorScheme.onBackground),
         borderRadius: BorderRadius.circular(16.0),
       ),
       child: DropdownButtonHideUnderline(
@@ -66,7 +66,7 @@ class _DropDownCountriesListState extends State<DropDownCountriesList> {
                       textAlign: TextAlign.end,
                       style: TextStyle(
                         fontSize: 16,
-                        color: Theme.of(context).colorScheme.onPrimary,
+                        color: colorScheme.onBackground,
                       ),
                     ),
                   ],

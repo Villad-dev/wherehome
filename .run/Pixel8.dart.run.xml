@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Pixel8.dart" type="FlutterRunConfigurationType" factoryName="Flutter">
+    <option name="additionalArgs" value="--dart-define=SDK_REGISTRY_TOKEN=&quot;pk.eyJ1IjoidmlsbGFkIiwiYSI6ImNsdm11ZmdoeDA1bmgya20wcXJwcmp4dmEifQ.-1QpWDZnGyzGGHzavIVjUQ&quot; --dart-define=BACKEND_URL=&quot;http://172.18.192.1:8080&quot;" />
+    <option name="filePath" value="$PROJECT_DIR$/lib/main.dart" />
+    <method v="2" />
+  </configuration>
+</component>

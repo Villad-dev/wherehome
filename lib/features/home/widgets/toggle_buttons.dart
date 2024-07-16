@@ -32,7 +32,7 @@ class ToggleButtonsExample extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: 16), // Add space between the buttons
+        const SizedBox(width: 16),
         GestureDetector(
           onTap: onToggleGrid,
           child: Container(

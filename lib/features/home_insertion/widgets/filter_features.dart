@@ -113,7 +113,6 @@ class _FeatureGridState extends State<FeatureGrid> {
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      // Prevent inner scroll conflicts
       gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
         maxCrossAxisExtent: 120,
         mainAxisSpacing: 10,
@@ -141,8 +140,7 @@ class _FeatureGridState extends State<FeatureGrid> {
                 maxFontSize: 18,
                 minFontSize: 12,
                 maxLines: 2,
-                // Limit the text to a single line
-                overflow: TextOverflow.ellipsis, // Handle overflow
+                overflow: TextOverflow.ellipsis,
               ),
             ),
           ),

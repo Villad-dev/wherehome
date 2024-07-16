@@ -47,7 +47,7 @@ class MapViewState extends State<MapView> {
   void _onMapCreated(MapboxMap mapboxMap) {
     this.mapboxMap = mapboxMap;
     if (permissionStatus.isGranted) {
-      // showCurrentLocation();
+      showCurrentLocation();
       showHomesOnMap();
     }
   }
@@ -86,15 +86,22 @@ class MapViewState extends State<MapView> {
               ),
               onMapCreated: _onMapCreated,
             )
-          : Column(
-              children: [
-                const Center(child: Text('Please grant location permission.')),
-                OutlinedButton(
-                    onPressed: () async {
-                      await openAppSettings();
-                    },
-                    child: const Text('Go to Permission Settings'))
-              ],
+          : Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text(
+                    'Please grant location permission.',
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                  OutlinedButton(
+                      onPressed: () async {
+                        await openAppSettings();
+                      },
+                      child: const Text('Go to Permission Settings'))
+                ],
+              ),
             ),
       floatingActionButton: permissionStatus.isGranted
           ? FloatingActionButton(
