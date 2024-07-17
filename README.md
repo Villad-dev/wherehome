@@ -1,17 +1,36 @@
-# wherehome
+# wherehome *app*
 
-A real estate mobile application(currently only Android). Comfy market place application.
-Future will be adopted to Web version.
+![image](/assets/images/presentation.png)
 
-## Getting Started
+A real estate mobile application(currently only Android). 
 
-This project is a starting point for a Flutter application.
+Comfy real estate market place application in future will be adopted to Web version.
 
-A few resources to get you started if this is your first Flutter project:
+## Stack Used
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Frontend: Flutter
+- Backend: dart_frog 
+<a href="https://github.com/VeryGoodOpenSource/dart_frog">
+  <img src="/assets/images/logo.png">
+</a>
+- Database: MongoDB
+- Localization: easy_localization package for Flutter
+- State Management: Provider
+- Authentication: Bearer Auth
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Installation
+
+```
+  git clone https://github.com/your-username/wherehome.git
+  cd wherehome
+```
+
+## ENV variables
+
+| ENV                | Value                |
+|--------------------|----------------------|
+| SDK_REGISTRY_TOKEN | your_mapbox_pk.token |
+| BACKEND_URL        | backend URL          |
+
+
+I appreciate if anyone will be using code in non comercial usage othervise pemission to use has to be requested. 
