@@ -9,10 +9,10 @@ Comfy real estate market place application in future will be adopted to Web vers
 ## Stack Used
 
 - Frontend: Flutter
-- Backend: dart_frog 
-<a href="https://github.com/VeryGoodOpenSource/dart_frog">
-  <img src="/assets/images/logo.png">
+- Backend: dart_frog <a href="https://github.com/VeryGoodOpenSource/dart_frog">
+  <img src="/assets/images/logo.png" width="30" height="30">
 </a>
+
 - Database: MongoDB
 - Localization: easy_localization package for Flutter
 - State Management: Provider
@@ -26,7 +26,7 @@ Comfy real estate market place application in future will be adopted to Web vers
 ```
 
 ## ENV variables
-
+Table of environmental variables
 | ENV                | Value                |
 |--------------------|----------------------|
 | SDK_REGISTRY_TOKEN | your_mapbox_pk.token |
@@ -34,12 +34,11 @@ Comfy real estate market place application in future will be adopted to Web vers
 
 ### Example:
 
+NB use only https links for Android builds!
 ```
 --dart-define=SDK_REGISTRY_TOKEN="your_mapbox_pk.token"
 --dart-define=BACKEND_URL="backend URL"
-
-NB use only https links for Android builds!
 ```
 
-#### Licence and right to
+## Licence and right to use
 I appreciate if anyone will be using code in non comercial usage othervise pemission to use has to be requested. 
