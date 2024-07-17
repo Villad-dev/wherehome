@@ -32,5 +32,14 @@ Comfy real estate market place application in future will be adopted to Web vers
 | SDK_REGISTRY_TOKEN | your_mapbox_pk.token |
 | BACKEND_URL        | backend URL          |
 
+### Example:
 
+```
+--dart-define=SDK_REGISTRY_TOKEN="your_mapbox_pk.token"
+--dart-define=BACKEND_URL="backend URL"
+
+NB use only https links for Android builds!
+```
+
+#### Licence and right to
 I appreciate if anyone will be using code in non comercial usage othervise pemission to use has to be requested. 
