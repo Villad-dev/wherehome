@@ -16,6 +16,9 @@ migrate_working_dir/
 *.iws
 .idea/
 .vscode/
+.run/
+.vscode/
+coverage
 
 # Flutter/Dart/Pub related
 **/doc/api/
@@ -26,6 +29,11 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+ios/
+linux/
+macos/
+windows/
+
 
 # Symbolication related
 app.*.symbols
